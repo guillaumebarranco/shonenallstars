@@ -1,0 +1,7 @@
+<app-character-list
+  *ngIf="characters | async"
+  [characters]="characters | async"
+  (chooseCharacter)="onChooseCharacter($event)"
+></app-character-list>
+
+<app-battle></app-battle>

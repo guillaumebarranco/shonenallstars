@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="let c of characters" (click)="choose(c.id)">
+    <img [src]="'/assets/img/persos/'+c.img_front">
+  </li>
+</ul>
