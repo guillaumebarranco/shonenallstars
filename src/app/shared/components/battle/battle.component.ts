@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { Character } from '../../interfaces/character/character';
 
 @Component({
   selector: 'app-battle',
@@ -6,10 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./battle.component.css']
 })
 export class BattleComponent implements OnInit {
+  @Input() ally: Character;
+  @Input() ennemy: Character;
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  constructor() {}
+  ngOnInit() {}
 }

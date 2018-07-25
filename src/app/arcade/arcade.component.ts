@@ -14,7 +14,8 @@ export class ArcadeComponent implements OnInit {
   @select(['characters', 'list'])
   readonly characters: Observable<Character[]>;
 
-  currentCharacter: any = null;
+  currentCharacter: Character = null;
+  ennemyCharacter: Character = null;
 
   constructor(private dispatcher: ArcadeDispatcher) { }
 
@@ -30,5 +31,14 @@ export class ArcadeComponent implements OnInit {
 
   beginArcade(): void {
     console.log('begin arcade');
+
+    const subscription = this.characters.subscribe((values: Character[]) => {
+
+      const randomValue: number = Math.floor(Math.random() * values.length);
+
+      this.ennemyCharacter = values
+        .filter((value: Character) => value.id !== this.currentCharacter.id)
+        .find((value: Character, index: number) => index === randomValue);
+    });
   }
 }
