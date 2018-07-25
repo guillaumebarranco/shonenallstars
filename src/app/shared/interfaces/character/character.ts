@@ -27,3 +27,8 @@ export class Attack {
 export interface CharacterResponse {
   persos: Character[];
 }
+
+export interface CharacterBattleConfig {
+  life: number;
+  pp: number;
+}
