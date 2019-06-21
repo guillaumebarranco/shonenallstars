@@ -1,15 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-adventure',
+  styleUrls: ['./adventure.component.scss'],
   templateUrl: './adventure.component.html',
-  styleUrls: ['./adventure.component.css']
 })
-export class AdventureComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-}
+export class AdventureComponent {}

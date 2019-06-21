@@ -1,0 +1,229 @@
+.battle {
+	position: relative;
+	padding: 10px;
+	width: 700px;
+	height: 500px;
+	border: solid 1px black;
+	position: relative;
+	margin-top: 20px;
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
+
+	&.battle_monochrome {
+		animation-name: monochrome;
+		animation-duration: 2s;
+		animation-timing-function: ease-in-out;
+	}
+}
+
+@keyframes monochrome {
+
+	15% {
+		filter: grayscale(0%);
+	}
+	70% {
+		filter: grayscale(100%);
+	}
+	100% {
+		filter: grayscale(0%);
+	}
+}
+
+.chat {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.ally {
+	height: 250px;
+	width: 700px;
+	bottom: 0;
+	left: 0;
+	position: relative;
+}
+
+.pseudo {
+
+	span {
+		font-size: 16px;
+		margin-left: 15px;
+	}
+}
+
+.picture, .infos_battle {
+	display: inline-block;
+	width: 340px;
+	vertical-align: top;
+}
+
+.ennemy.injured img, .ally.injured img {
+	animation-name: injured;
+	animation-duration: 0.4s;
+	animation-timing-function: ease-in-out;
+}
+
+.ally {
+
+	.picture {
+		margin-bottom: 100px;
+
+		img {
+			float: left;
+		}
+	}
+	.anim {
+		position: absolute;
+		right: 110px;
+		top: 56px;
+		z-index: 2;
+	}
+}
+
+.ennemy {
+	height: 200px;
+	width: 700px;
+	top: 0;
+	left: 0;
+	position: relative;
+
+	.picture {
+		float: right;
+		position: relative;
+
+		img {
+			position: absolute;
+			right: 20px;
+		}
+	}
+
+	.anim {
+		position: absolute;
+		right: 110px;
+		top: 56px;
+		z-index: 2;
+	}
+}
+
+.button_tools {
+	position: relative;
+}
+
+.choose {
+	padding: 0;
+	margin: 0;
+
+	li {
+		list-style: none;
+		display: inline-block;
+		width: 170px;
+		margin: 0;
+		vertical-align: top;
+
+		button {
+			width: 170px;
+			margin: 0;
+			padding: 4px;
+			height: 70px;
+			border: solid 1px black;
+			box-sizing: border-box;
+
+			span {
+				font-size: 10px;
+				position: absolute;
+				bottom: 10px;
+				right: 10px;
+			}
+
+			em {
+				font-style: normal;
+			}
+		}
+	}
+}
+
+.choose_perso {
+
+	 li {
+		list-style: none;
+		display: inline-block;
+		position: relative;
+
+		img {
+			max-width: 100px;
+			border: solid 1px black;
+			margin: 10px;
+			filter: grayscale(100%);
+
+			&.unlocked {
+				cursor: pointer;
+				filter: grayscale(0%);
+			}
+		}
+
+		.sub {
+			display: none;
+			position: absolute;
+			background: black;
+			color: white;
+			z-index: 2;
+			font-size: 13px;
+			text-align: center;
+			border-radius: 10px;
+			padding: 6px;
+			top: 0px;
+			height: 103px;
+		}
+
+		&:hover {
+			.sub {
+				display: block;
+			}
+		}
+	}
+}
+
+.status {
+
+	div {
+		margin-top: 10px;
+	}
+	b {
+		width: 30px;
+		display: inline-block;
+		vertical-align: top;
+	}
+	span {
+		display: inline-block;
+		vertical-align: top;
+		background-color: blue;
+		width: 300px;
+		color: white;
+	}
+
+	.pp {
+		span {
+			transition: 0.6s;
+		}
+	}
+
+	.exp {
+		margin-left: 15px;
+		background: red;
+		font-size: 11px;
+		display: inline-block;
+		color: white;
+		text-align: center;
+		position: relative;
+
+		&:after {
+			content: "";
+			width: 200px;
+			height: 3px;
+			background: black;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+  "files.trimTrailingWhitespace": true,
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": true,
+  "prettier.stylelintIntegration": true,
+  "prettier.trailingComma": "es5",
+  "editor.tabSize": 2,
+  "html.format.enable": true,
+  "importSorter.generalConfiguration.exclude": ["polyfills.ts"],
+  "importSorter.generalConfiguration.sortOnBeforeSave": true,
+  "search.usePCRE2": true
+}

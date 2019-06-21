@@ -1,42 +1,42 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CommonModule } from '@angular/common';
 
-import { HomeComponent } from './home/home.component';
-import { ArcadeComponent } from './arcade/arcade.component';
 import { AdventureComponent } from './adventure/adventure.component';
+import { ArcadeComponent } from './arcade/arcade.component';
+import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
     pathMatch: 'full',
+    redirectTo: '/home',
   },
   {
-    path: 'home',
+    canActivate: [],
     component: HomeComponent,
-    canActivate: [],
+    path: 'home',
   },
   {
-    path: 'arcade',
+    canActivate: [],
     component: ArcadeComponent,
-    canActivate: [],
+    path: 'arcade',
   },
   {
-    path: 'adventure',
-    component: AdventureComponent,
     canActivate: [],
+    component: AdventureComponent,
+    path: 'adventure',
   },
 ];
 
 @NgModule({
+  exports: [RouterModule],
   imports: [
     CommonModule,
     RouterModule.forRoot(appRoutes, {
-      useHash: true,
       enableTracing: false,
-    })
+      useHash: true,
+    }),
   ],
-  exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

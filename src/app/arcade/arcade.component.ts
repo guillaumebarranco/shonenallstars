@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
 import { select } from '@angular-redux/store';
+import { Component, OnInit } from '@angular/core';
+
 import { Observable } from 'rxjs';
 
 import { Character } from '../shared/interfaces/character/character';
@@ -7,37 +8,37 @@ import { ArcadeDispatcher } from './arcade.dispatcher';
 
 @Component({
   selector: 'app-arcade',
+  styleUrls: ['./arcade.component.scss'],
   templateUrl: './arcade.component.html',
-  styleUrls: ['./arcade.component.css']
 })
 export class ArcadeComponent implements OnInit {
   @select(['characters', 'list'])
-  readonly characters: Observable<Character[]>;
+  public readonly characters: Observable<Character[]>;
 
-  currentCharacter: Character = null;
-  ennemyCharacter: Character = null;
+  public currentCharacterId = 0;
+  public allyCharacter: Character = null;
+  public ennemyCharacter: Character = null;
 
-  constructor(private dispatcher: ArcadeDispatcher) { }
+  constructor(private dispatcher: ArcadeDispatcher) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.dispatcher.getCharacters();
   }
 
-  onChooseCharacter(character: Character): void {
-    console.log('okk');
-    this.currentCharacter = character;
+  public onChooseCharacter(character: number): void {
+    this.currentCharacterId = character;
     this.beginArcade();
   }
 
-  beginArcade(): void {
-    console.log('begin arcade');
-
-    const subscription = this.characters.subscribe((values: Character[]) => {
-
+  public beginArcade(): void {
+    this.characters.subscribe((values: Character[]) => {
       const randomValue: number = Math.floor(Math.random() * values.length);
+      this.allyCharacter = values.find(
+        (value: Character) => value.id === this.currentCharacterId
+      );
 
       this.ennemyCharacter = values
-        .filter((value: Character) => value.id !== this.currentCharacter.id)
+        .filter((value: Character) => value.id !== this.currentCharacterId)
         .find((value: Character, index: number) => index === randomValue);
     });
   }

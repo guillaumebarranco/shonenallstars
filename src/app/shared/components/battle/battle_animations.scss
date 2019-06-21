@@ -1,0 +1,1908 @@
+
+$left_ally : -540px;
+$left_ennemy : -70px;
+$top : -20px;
+
+
+/*
+*	PUNCH ////// PUNCH 2 /////// PHYSIC
+*/
+
+.anim_punch, .anim_punch2, .anim_physic, .anim_punch_yellow {
+	width: 80px;
+	height: 87px;
+	position: absolute;
+	background-repeat: no-repeat;
+	animation-name: punch;
+	animation-duration: 1s;
+	animation-timing-function: ease-in-out;
+}
+
+.anim_punch {
+	background-image: url('/assets/img/anim/punch.png');
+}
+
+.anim_punch2 {
+	background-image: url('/assets/img/anim/punch2.png');
+}
+
+.anim_punch_yellow {
+	background-image: url('/assets/img/anim/punch_yellow.png');
+}
+
+.anim_physic {
+	background-image: url('/assets/img/anim/physic.png');
+}
+
+.ally .anim_punch, .ally .anim_punch2, .ally .anim_physic, .ally .anim_punch_yellow {
+	left: $left_ally;
+}
+.ennemy .anim_punch, .ennemy .anim_punch2, .ennemy .anim_physic, .ennemy .anim_punch_yellow {
+	left: $left_ennemy;
+}
+
+@keyframes punch {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+
+/*
+*	DOUBLE PUNCH ////// MAGNUM /////// EYE
+*/
+
+.anim_punch_double, .anim_magnum {
+	width: 169px;
+	height: 87px;
+	position: absolute;
+	background-repeat: no-repeat;
+	animation-name: punch;
+	animation-duration: 1s;
+	animation-timing-function: ease-in-out;
+}
+
+.anim_punch_double {
+	background-image: url('/assets/img/anim/punch_double.png');
+}
+
+.anim_magnum {
+	background-image: url('/assets/img/anim/magnum.png');
+}
+
+.anim_eye {
+	position: relative;
+	border: solid 7px black;
+	width: 35px;
+	height: 35px;
+	border-radius: 100%;
+	box-sizing: content-box;
+	animation-duration: 1s;
+	animation-timing-function: ease-in-out;
+	background-color: darken(red, 20%);
+	box-shadow: 4px 0px 12px 0px black inset;
+
+	&:before {
+		position: absolute;
+		content: "";
+		background-color: wheat;
+		border: solid 8px black;
+		z-index: -1;
+		width: 125px;
+		height: 125px;
+		border-radius: 100%;
+		box-sizing: content-box;
+		animation-duration: 1s;
+		animation-timing-function: ease-in-out;
+		animation-name: punch;
+		top: -51px;
+		left: -53px;
+		box-shadow: 7px 0px 17px 3px black inset;
+	}
+}
+
+.ally .anim_punch_double, .ally .anim_magnum {
+	left: $left_ally - 50px;
+}
+
+.ennemy .anim_punch_double, .ennemy .anim_magnum {
+	left: $left_ennemy - 50px;
+}
+
+.ally .anim_punch_double, .ally .anim_magnum, .ally .anim_eye {
+	left: $left_ally;
+}
+
+.ennemy .anim_punch_double, .ennemy .anim_magnum, .ennemy .anim_eye {
+	left: $left_ennemy;
+}
+
+
+
+/*
+*	CUT
+*/
+
+.anim_cut {
+	width: 4px;
+	max-width: 4px;
+	height: 0;
+	background-color: black;
+	position: absolute;
+	left: 62px;
+	top: -47px;
+	transform: rotate(41deg);
+	animation-name: cut;
+	animation-duration: 1s;
+  	transform-origin: 0% 0%;
+}
+
+.ally .anim_cut {
+	left: $left_ally + 112px;
+}
+.ennemy .anim_cut {
+	left: $left_ennemy + 112px;
+}
+
+@keyframes cut {
+	0% {
+		height: 1px;
+	}
+	100% {
+		height: 200px;
+	}
+}
+
+/*
+*	CUT TRIPLE
+*/
+
+.anim_cut_triple {
+	width: 4px;
+	height: 0;
+	background-color: black;
+	position: absolute;
+	left: 30px;
+	top: -20px;
+	transform: rotate(41deg);
+	animation-name: cut_triple;
+	animation-duration: 1s;
+  	transform-origin: 0% 0%;
+  	height: 120px;
+
+  	&:before, &:after {
+  		content: "";
+		width: 4px;
+		height: 0;
+		background-color: black;
+		position: absolute;
+		display: block;
+		animation-name: cut_triple;
+		animation-duration: 1s;
+	  	transform-origin: 0% 0%;
+  	}
+
+  	&:before {
+		left: -30px;
+  		top: 25px;
+  	}
+
+  	&:after {
+		left: 30px;
+  		top: -25px;
+  	}
+}
+
+.ally .anim_cut_triple {
+	left: $left_ally + 112px;
+}
+.ennemy .anim_cut_triple {
+	left: $left_ennemy + 112px;
+}
+
+@keyframes cut_triple {
+	0% {
+		height: 1px;
+	}
+	100% {
+		height: 120px;
+	}
+}
+
+/*
+*	CUT ASCENDANT
+*/
+
+.anim_cut_bas {
+	width: 4px;
+	max-width: 4px;
+	height: 0;
+	background-color: black;
+	position: absolute;
+	transform: rotate(41deg);
+	animation-name: cut_bas;
+	animation-duration: 1s;
+}
+
+.ally .anim_cut_bas {
+	animation-name: receive_cut_bas;
+}
+.ennemy .anim_cut_bas {
+	animation-name: cut_bas;
+}
+
+@keyframes cut_bas {
+	0% {
+		left: $left_ennemy - 35px;
+		top: $top + 123px;
+		height: 1px;
+	}
+	100% {
+		left: $left_ennemy + 30px;
+		top: $top - 52px;
+		height: 200px;
+	}
+}
+
+@keyframes receive_cut_bas {
+	0% {
+		left: $left_ally - 35px;
+		top: $top + 123px;
+		height: 1px;
+	}
+	100% {
+		left: $left_ally + 30px;
+		top: $top - 52px;
+		height: 200px;
+	}
+}
+
+/*
+*	GATLING
+*/
+
+.anim_gatling {
+	width: 80px;
+	height: 87px;
+	position: absolute;
+	background-image: url('/assets/img/anim/punch.png');
+	background-repeat: no-repeat;
+	animation-duration: 2s;
+	animation-timing-function: ease-in-out;
+}
+
+.ally .anim_gatling {
+	animation-name: receive_gatling;
+}
+.ennemy .anim_gatling {
+	animation-name: gatling;
+}
+
+@keyframes gatling {
+	0% {
+		opacity: 1;
+		left: $left_ennemy;
+		top: $top;
+	}
+	5% {
+		opacity: 0;
+	}
+	10% {
+		opacity: 1;
+		left: $left_ennemy + 50px;
+		top: $top + 50px;
+	}
+	15% {
+		opacity: 0;
+	}
+	20% {
+		opacity: 1;
+		left: $left_ennemy + 100px;
+		top: $top + 100px;
+	}
+	25% {
+		opacity: 0;
+	}
+	30% {
+		opacity: 1;
+		left: $left_ennemy + 150px;
+		top: $top + 50px;
+	}
+	35% {
+		opacity: 0;
+	}
+	40% {
+		opacity: 1;
+		left: $left_ennemy + 100px;
+		top: $top;
+	}
+	45% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+		left: $left_ennemy + 50px;
+		top: $top - 50px;
+	}
+	55% {
+		opacity: 0;
+	}
+	60% {
+		opacity: 1;
+		left: $left_ennemy;
+		top: $top - 100px;
+	}
+	65% {
+		opacity: 0;
+	}
+	70% {
+		opacity: 1;
+		left: $left_ennemy - 50px;
+		top: $top - 50px;
+	}
+	75% {
+		opacity: 0;
+	}
+	80% {
+		opacity: 1;
+		left: $left_ennemy;
+		top: $top;
+	}
+	85% {
+		opacity: 0;
+	}
+	90% {
+		opacity: 1;
+		left: $left_ennemy + 50px;
+		top: $top + 50px;
+	}
+	95% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+		left: $left_ennemy;
+		top: $top;
+	}
+}
+
+@keyframes receive_gatling {
+	0% {
+		opacity: 1;
+		left: $left_ally;
+		top: $top;
+	}
+	5% {
+		opacity: 0;
+	}
+	10% {
+		opacity: 1;
+		left: $left_ally - 50px;
+		top: $top - 50px;
+	}
+	15% {
+		opacity: 0;
+	}
+	20% {
+		opacity: 1;
+		left: $left_ally - 100px;
+		top: $top - 100px;
+	}
+	25% {
+		opacity: 0;
+	}
+	30% {
+		opacity: 1;
+		left: $left_ally - 150px;
+		top: $top - 50px;
+	}
+	35% {
+		opacity: 0;
+	}
+	40% {
+		opacity: 1;
+		left: $left_ally - 100px;
+		top: $top;
+	}
+	45% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+		left: $left_ally - 50px;
+		top: $top + 50px;
+	}
+	55% {
+		opacity: 0;
+	}
+	60% {
+		opacity: 1;
+		left: $left_ally;
+		top: $top + 100px;
+	}
+	65% {
+		opacity: 0;
+	}
+	70% {
+		opacity: 1;
+		left: $left_ally + 50px;
+		top: $top + 50px;
+	}
+	75% {
+		opacity: 0;
+	}
+	80% {
+		opacity: 1;
+		left: $left_ally;
+		top: $top;
+	}
+	85% {
+		opacity: 0;
+	}
+	90% {
+		opacity: 1;
+		left: $left_ally - 50px;
+		top: $top - 50px;
+	}
+	95% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+		left: $left_ally;
+		top: $top;
+	}
+}
+
+/*
+*	BUBBLE
+*/
+
+.anim_bubble {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	position: absolute;
+	background: radial-gradient(circle at bottom, #81e8f6, #76deef 10%, #055194 80%, #062745 100%);
+	opacity: 0.8;
+	animation-duration: 1.7s;
+	animation-timing-function: ease-in-out;
+
+	&:before {
+		content: "";
+		position: absolute;
+		top: 1%;
+		left: 5%;
+		width: 90%;
+		height: 90%;
+		border-radius: 100%;
+		background: radial-gradient(circle at top, white, rgba(255, 255, 255, 0) 58%);
+		filter: blur(5px);
+		z-index: 2;
+	}
+
+	&:after {
+		content: "";
+		position: absolute;
+		display: none;
+		top: 5%;
+		left: 10%;
+		width: 80%;
+		height: 80%;
+		border-radius: 100%;
+		filter: blur(1px);
+		z-index: 2;
+		transform: rotateZ(-30deg);
+	}
+}
+
+.ally .anim_bubble {
+	animation-name: receive_bubble;
+}
+.ennemy .anim_bubble {
+	animation-name: bubble;
+}
+
+@keyframes bubble {
+
+	0% {
+		height: 50px;
+	    width: 50px;
+	    top: $top + 230px;
+	    left: $left_ennemy - 350px;
+		transform: scale(1);
+	}
+
+	20% {
+		transform: scaleY(0.80) scaleX(1.20);
+	}
+
+	48% {
+		transform: scaleY(1.1) scaleX(0.9);
+	}
+
+	68% {
+		transform: scaleY(0.98) scaleX(1.02);
+	}
+
+	80% {
+		transform: scaleY(1.20) scaleX(0.80);
+	}
+
+	97%, 100% {
+		transform: scale(1);
+	}
+
+	100% {
+		width: 150px;
+	    height: 150px;
+	    top: $top - 5px;
+	    left: $left_ennemy - 4px;
+	}
+}
+
+@keyframes receive_bubble {
+
+	0% {
+		height: 50px;
+	    width: 50px;
+	    top: $top - 230px;
+	    left: $left_ally + 350px;
+		transform: scale(1);
+	}
+
+	20% {
+		transform: scaleY(0.80) scaleX(1.20);
+	}
+
+	48% {
+		transform: scaleY(1.1) scaleX(0.9);
+	}
+
+	68% {
+		transform: scaleY(0.98) scaleX(1.02);
+	}
+
+	80% {
+		transform: scaleY(1.20) scaleX(0.80);
+	}
+
+	97%, 100% {
+		transform: scale(1);
+	}
+
+	100% {
+		width: 150px;
+	    height: 150px;
+	    top: $top + 5px;
+	    left: $left_ally + 4px;
+	}
+}
+
+/*
+*	WINGS
+*/
+
+.anim_wings {
+	position: absolute;
+	animation-duration: 1.5s;
+	animation-timing-function: linear;
+	animation-name: punch;
+
+	&:before, &:after {
+		content: "";
+		position: absolute;
+		background-image: url('/assets/img/anim/wing.png');
+		background-repeat: no-repeat;
+		width: 160px;
+		height: 80px;
+		top:0;
+		left: 0;
+	}
+
+	&:after {
+		transform: scaleX(-1);
+		filter: FlipH;
+		left: 200px;
+	}
+}
+
+.ally .anim_wings {
+	animation-name: receive_punch;
+	top: $top - 230px;
+	left: $left_ennemy - 100px;
+}
+.ennemy .anim_wings {
+	animation-name: punch;
+	top: $top + 230px;
+	left: $left_ally - 100px;
+}
+
+/*
+*	TORNADE
+*/
+
+.anim_tornade, .anim_tornade_rouge {
+	position: absolute;
+	animation-duration: 1.5s;
+	animation-timing-function: linear;
+	animation-name: tornade;
+
+	&:before {
+		position: absolute;
+		content: "Ceci est une tornade";
+	}
+}
+
+.anim_tornade_rouge {
+	color: red;
+}
+
+.ally .anim_tornade, .ally .anim_tornade_rouge {
+	animation-name: receive_tornade;
+}
+.ennemy .anim_tornade, .ennemy .anim_tornade_rouge {
+	animation-name: tornade;
+}
+
+@keyframes tornade {
+	0% {
+	    top: $top + 230px;
+	    left: $left_ennemy - 350px;
+	}
+
+	100% {
+		transform: rotate(3000deg);
+	    top: $top - 5px;
+	    left: $left_ennemy - 4px;
+	}
+}
+
+@keyframes receive_tornade {
+	0% {
+	    top: $top - 230px;
+	    left: $left_ally + 350px;
+	}
+
+	100% {
+		transform: rotate(3000deg);
+	    top: $top + 5px;
+	    left: $left_ally + 4px;
+	}
+}
+
+/*
+*	LEAF //////// LEAF 2
+*/
+
+.anim_leaf, .anim_leaf2 {
+	display: inline-block;
+	margin: 0;
+	border-radius: 50%;
+	position: absolute;
+	background: url('/assets/img/anim/ballon.png') repeat-x;
+	background-size: auto 100%;
+	animation-duration: 1.7s;
+	animation-timing-function: ease-in-out;
+	width: 100px;
+	height: 100px;
+}
+
+.ally .anim_leaf {
+	animation-name: receive_leaf;
+}
+.ennemy .anim_leaf {
+	animation-name: leaf;
+}
+
+.ally .anim_leaf2 {
+	animation-name: receive_leaftwo;
+}
+.ennemy .anim_leaf2 {
+	animation-name: leaftwo;
+}
+
+@keyframes leaf {
+	0% {
+	    top: $top + 230px;
+	    left: $left_ennemy - 350px;
+	}
+
+	70% {
+		top: $top - 105px;
+	    left: $left_ennemy - 104px;
+	}
+
+	100% {
+		transform: rotate(2600deg);
+	    top: $top - 5px;
+	    left: $left_ennemy - 4px;
+	}
+}
+
+@keyframes receive_leaf {
+	0% {
+	    top: $top + 230px;
+	    left: $left_ally + 350px;
+	}
+
+	70% {
+		top: $top + 105px;
+	    left: $left_ally + 104px;
+	}
+
+	100% {
+		transform: rotate(2600deg);
+	    top: $top - 5px;
+	    left: $left_ally + 4px;
+	}
+}
+
+@keyframes leaftwo {
+	0% {
+	    top: $top + 230px;
+	    left: $left_ennemy - 350px;
+	}
+
+	70% {
+		top: $top - 105px;
+	    left: $left_ennemy - 804px;
+	}
+
+	100% {
+		transform: rotate(2600deg);
+	    top: $top - 5px;
+	    left: $left_ennemy - 4px;
+	}
+}
+
+@keyframes receive_leaftwo {
+	0% {
+	    top: $top - 230px;
+	    left: $left_ally + 350px;
+	}
+
+	70% {
+		top: $top + 105px;
+	    left: $left_ennemy + 804px;
+	}
+
+	100% {
+		transform: rotate(2600deg);
+	    top: $top + 5px;
+	    left: $left_ally + 4px;
+	}
+}
+
+
+/*
+*	RASENGAN //////// SKY SHOOT
+*/
+
+.anim_rasengan, .anim_sky_shoot {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	border-radius: 50%;
+	position: absolute;
+	background-size: auto 100%;
+	animation-duration: 1.7s;
+	animation-timing-function: ease-in-out;
+	width: 100px;
+	height: 100px;
+	background-repeat: repeat-x;
+}
+
+.anim_rasengan {
+	background-image: url('/assets/img/anim/rasengan.png');
+}
+.anim_sky_shoot {
+	background-image: url('/assets/img/anim/sky_shoot.png');
+}
+
+.ally .anim_rasengan, .ally .anim_sky_shoot {
+	animation-name: receive_rasengan;
+}
+.ennemy .anim_rasengan, .ennemy .anim_sky_shoot {
+	animation-name: rasengan;
+}
+
+@keyframes rasengan {
+	0% {
+	    top: $top + 230px;
+	    left: $left_ennemy - 350px;
+	}
+
+	100% {
+		transform: rotate(2600deg);
+	    top: $top - 5px;
+	    left: $left_ennemy - 4px;
+	}
+}
+
+@keyframes receive_rasengan {
+	0% {
+	    top: $top - 230px;
+	    left: $left_ally + 350px;
+	}
+
+	100% {
+		transform: rotate(2600deg);
+	    top: $top + 5px;
+	    left: $left_ally + 4px;
+	}
+}
+
+/*
+*	RASENGAN PLANETAIRE
+*/
+
+.anim_planetaire {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	border-radius: 50%;
+	position: absolute;
+	background: url('/assets/img/anim/rasengan.png') repeat-x;
+	background-size: auto 100%;
+	animation-duration: 1.3s;
+	animation-timing-function: ease-in-out;
+	width: 70px;
+	height: 70px;
+
+	&:before, &:after {
+		content: "";
+		width: 25px;
+		height: 25px;
+		display: block;
+		position: absolute;
+		border-radius: 50%;
+		background: url('/assets/img/anim/rasengan.png') repeat-x;
+		background-size: auto 100%;
+		top: 23px;
+	}
+
+	&:before {
+		animation-duration: 1.3s;
+		animation-timing-function: ease-in-out;
+		animation-name: before_planetaire;
+	}
+
+	&:after {
+		animation-duration: 1.3s;
+		animation-timing-function: ease-in-out;
+		animation-name: after_planetaire;
+	}
+}
+
+.ally .anim_planetaire {
+	animation-name: receive_planetaire;
+}
+.ennemy .anim_planetaire {
+	animation-name: planetaire;
+}
+
+@keyframes before_planetaire {
+	0% {
+		opacity: 1;
+		left: -27px;
+	}
+
+	60% {
+		left: -27px;
+	}
+
+	75% {
+		opacity: 1;
+	}
+
+	100% {
+		left: 27px;
+		opacity: 0;
+	}
+}
+
+@keyframes after_planetaire {
+	0% {
+		opacity: 1;
+		left: 72px;
+	}
+
+	60% {
+		left: 72px;
+	}
+
+	75% {
+		opacity: 1;
+	}
+
+	100% {
+		left: 27px;
+		opacity: 0;
+	}
+}
+
+@keyframes planetaire {
+	0% {
+	    top: $top + 230px;
+	    left: $left_ennemy - 350px;
+	}
+
+	100% {
+		transform: rotate(1000deg);
+	    top: $top - 5px;
+	    left: $left_ennemy - 4px;
+	}
+}
+
+@keyframes receive_planetaire {
+	0% {
+	    top: $top - 230px;
+	    left: $left_ally + 350px;
+	}
+
+	100% {
+		transform: rotate(1000deg);
+	    top: $top + 5px;
+	    left: $left_ally + 4px;
+	}
+}
+
+
+/*
+*	GENKIDAMA //////// FIREBALL //////// BLACK BALL ///////// PURPLE BALL ///////// CANON
+*/
+
+.anim_genkidama, .anim_fireball, .anim_blackball, .anim_purpleball, .anim_canon, .anim_gauntlet {
+ 	display: inline-block;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	position: absolute;
+	animation-duration: 1.3s;
+	animation-timing-function: ease-in-out;
+}
+
+.anim_genkidama {
+	border-radius: 50%;
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#fff9f9), color-stop(60%,#7db9e8), color-stop(100%,#ffffff));
+	background: -webkit-radial-gradient(center, ellipse cover, #fff9f9 0%,#7db9e8 60%,#ffffff 100%);
+}
+
+.anim_fireball {
+	border-radius: 50%;
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(248,80,50,1)), color-stop(50%,rgba(241,111,92,1)), color-stop(51%,rgba(246,41,12,1)), color-stop(71%,rgba(240,47,23,1)), color-stop(100%,rgba(231,56,39,1)));
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(248,80,50,1) 0%,rgba(241,111,92,1) 50%,rgba(246,41,12,1) 51%,rgba(240,47,23,1) 71%,rgba(231,56,39,1) 100%);
+}
+
+.anim_blackball {
+	border-radius: 50%;
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(149,149,149,1)), color-stop(46%,rgba(13,13,13,1)), color-stop(50%,rgba(1,1,1,1)), color-stop(53%,rgba(10,10,10,1)), color-stop(76%,rgba(78,78,78,1)), color-stop(87%,rgba(56,56,56,1)), color-stop(100%,rgba(27,27,27,1)));
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(149,149,149,1) 0%,rgba(13,13,13,1) 46%,rgba(1,1,1,1) 50%,rgba(10,10,10,1) 53%,rgba(78,78,78,1) 76%,rgba(56,56,56,1) 87%,rgba(27,27,27,1) 100%);
+}
+
+.anim_purpleball {
+	border-radius: 50%;
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(203,96,179,1)), color-stop(50%,rgba(193,70,161,1)), color-stop(51%,rgba(168,0,119,1)), color-stop(100%,rgba(219,54,164,1)));
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(203,96,179,1) 0%,rgba(193,70,161,1) 50%,rgba(168,0,119,1) 51%,rgba(219,54,164,1) 100%);
+}
+
+.anim_canon {
+	background-size: auto 100%;
+	width: 100px;
+	height: 100px;
+	background: url('/assets/img/anim/canon.png') repeat-x;
+}
+
+.anim_gauntlet {
+	width: 105px;
+	height: 99px;
+	background: url('/assets/img/anim/gauntlet.png') repeat-x;
+}
+
+.ally {
+	.anim_genkidama, .anim_fireball, .anim_blackball, .anim_purpleball {
+		animation-name: receive_genkidama;
+	}
+}
+
+.ennemy {
+	.anim_genkidama, .anim_fireball, .anim_blackball, .anim_purpleball {
+		animation-name: genkidama;
+	}
+}
+
+@keyframes genkidama {
+
+	0% {
+		height: 50px;
+	    width: 50px;
+	    top: $top + 230px;
+	    left: $left_ennemy - 350px;
+	}
+
+	100% {
+		width: 150px;
+	    height: 150px;
+	    top: $top - 5px;
+	    left: $left_ennemy - 4px;
+	}
+}
+
+@keyframes receive_genkidama {
+
+	0% {
+		height: 50px;
+	    width: 50px;
+	    top: $top - 230px;
+	    left: $left_ally + 350px;
+	}
+
+	100% {
+		width: 150px;
+	    height: 150px;
+	    top: $top + 5px;
+	    left: $left_ally + 4px;
+	}
+}
+
+
+/*
+*	YIN YANG
+*/
+
+.anim_yin_yang, .anim_yin_yang:before, .anim_yin_yang:after {
+	box-sizing: content-box;
+	width: 12px;
+	height: 12px;
+	border-style: solid;
+	border-radius: 100%;
+	position: absolute;
+	animation-duration: 1.5s;
+	animation-timing-function: ease-in-out;
+	border-color: black;
+	background-color: white;
+}
+
+.anim_yin_yang {
+	width: 96px;
+	height: 48px;
+	border-width: 2px;
+	border-bottom-width: 50px;
+	transform: rotateZ(-45deg) scaleX(1) scaleY(1) scaleZ(1);
+	transform-origin: 50% 50% 0;
+
+	&:before, &:after {
+		content: "";
+		top: 50%;
+		border-width: 18px;
+		transform: scaleX(1) scaleY(1) scaleZ(1);
+		transform-origin: 50% 50% 0;
+		border: 18px solid black;
+		background-color: white;
+	}
+
+	&:after {
+		left: 50%;
+		border: 18px solid white;
+		background-color: black;
+	}
+}
+
+.ally .anim_yin_yang, .ally .anim_canon {
+	animation-name: receive_yin_yang;
+}
+.ennemy .anim_yin_yang, .ennemy .anim_canon {
+	animation-name: yin_yang;
+}
+
+@keyframes yin_yang {
+
+	0% {
+	    top: $top + 230px;
+	    left: $left_ennemy - 350px;
+	}
+
+	100% {
+	    top: $top - 5px;
+	    left: $left_ennemy - 4px;
+	}
+}
+
+@keyframes receive_yin_yang {
+
+	0% {
+	    top: $top - 230px;
+	    left: $left_ally + 350px;
+	}
+
+	100% {
+	    top: $top + 5px;
+	    left: $left_ally + 4px;
+	}
+}
+
+/*
+*	MOON ////// GHOST
+*/
+
+.anim_moon, .anim_ghost, .anim_moon_big {
+	animation-duration: 1.3s;
+	position: absolute;
+	animation-timing-function: ease-in-out;
+}
+
+.anim_moon {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	box-shadow: 15px 15px 0 0 black;
+}
+
+.anim_moon_big {
+	width: 150px;
+	height: 80px;
+	border-radius: 50%;
+	box-shadow: 15px 15px 0 0 black;
+}
+
+.anim_ghost {
+	width: 100px;
+	height: 114px;
+	background-image: url('/assets/img/anim/ghost.png');
+	background-repeat: no-repeat;
+}
+
+.ally .anim_moon, .ally .anim_moon_big {
+	animation-name: receive_yin_yang;
+	transform: rotate(87deg);
+}
+.ennemy .anim_moon, .ennemy .anim_moon_big {
+	animation-name: yin_yang;
+	transform: rotate(-87deg);
+}
+
+.ally .anim_ghost, .ally .anim_gauntlet {
+	transform: scaleX(-1);
+	filter: FlipH;
+	animation-name: receive_yin_yang;
+}
+
+.ally .anim_gauntlet {
+	transform:rotate(-65deg) scaleX(-1);
+}
+
+.ennemy .anim_ghost, .ennemy .anim_gauntlet {
+	animation-name: yin_yang;
+}
+
+
+/*
+*	CHIPS
+*/
+
+.anim_chips {
+	width: 100px;
+	height: 114px;
+	background-image: url('/assets/img/anim/chips.png');
+	background-repeat: no-repeat;
+	animation-duration: 2s;
+	position: absolute;
+	animation-timing-function: ease-in-out;
+}
+
+.ally .anim_chips {
+	animation-name: receive_chips;
+}
+.ennemy .anim_chips {
+	animation-name: chips;
+}
+
+@keyframes chips {
+
+	0% {
+	    top: $top + 230px;
+	    left: $left_ennemy - 350px;
+	}
+
+	10% {
+		transform: rotate(-30deg);
+	}
+
+	20% {
+		transform: rotate(30deg);
+	}
+
+	30% {
+		transform: rotate(-30deg);
+	}
+
+	40% {
+		transform: rotate(30deg);
+		top: $top + 230px;
+	    left: $left_ennemy - 350px;
+	}
+
+	100% {
+	    top: $top - 5px;
+	    left: $left_ennemy - 4px;
+	}
+}
+
+@keyframes receive_chips {
+
+	0% {
+	    top: $top - 230px;
+	    left: $left_ally + 350px;
+	}
+
+	10% {
+		transform: rotate(30deg);
+	}
+
+	20% {
+		transform: rotate(-30deg);
+	}
+
+	30% {
+		transform: rotate(+30deg);
+	}
+
+	40% {
+		transform: rotate(-30deg);
+		top: $top - 230px;
+	    left: $left_ennemy + 350px;
+	}
+
+	100% {
+	    top: $top + 5px;
+	    left: $left_ally + 4px;
+	}
+}
+
+/*
+*	KAMEHAMEHA ////// ZEBUB FINISHER
+*/
+
+.anim_kamehameha, .anim_zebub {
+	width: 20px;
+	height: 2px;
+	position: absolute;
+	background-color: blue;
+	animation-duration: 1.3s;
+	animation-timing-function: linear;
+
+	&:after {
+		content: '';
+		width: 50px;
+		height: 50px;
+		border-radius: 100%;
+		background-color: blue;
+		position: absolute;
+		top: -10px;
+	  	left: -16px;
+	}
+}
+
+.anim_zebub {
+	background-color: gold;
+
+	&:after {
+		background-color: gold;
+	}
+}
+
+.ally .anim_kamehameha, .ally .anim_zebub {
+	animation-name: receive_kamehameha;
+	transform: rotate(-122deg);
+}
+
+.ennemy .anim_kamehameha, .ennemy .anim_zebub {
+	animation-name: kamehameha;
+	transform: rotate(58deg);
+}
+
+@keyframes kamehameha {
+	0% {
+	    height: 0px;
+	    top: $top + 275px;
+		left: $left_ennemy - 386px;
+
+	}
+
+	100% {
+		top: $top - 69px;
+		left: $left_ennemy - 194px;
+		height: 450px;
+	}
+}
+
+@keyframes receive_kamehameha {
+	0% {
+	    height: 0px;
+	    top: $top - 170px;
+		left: $left_ally + 386px;
+
+	}
+
+	100% {
+		top: $top - 280px;
+		left: $left_ally + 194px;
+		height: 450px;
+	}
+}
+
+/*
+*	RAYONS ASTRO-DEMONIAQUES
+*/
+
+.anim_rayons {
+	width: 20px;
+	height: 2px;
+	position: absolute;
+	animation-duration: 3s;
+	animation-timing-function: linear;
+
+	&:after {
+		content: '';
+		width: 50px;
+		height: 50px;
+		border-radius: 100%;
+		background-color: inherit;
+		position: absolute;
+		top: -10px;
+	  	left: -16px;
+	}
+}
+
+.ally .anim_rayons {
+	animation-name: receive_rayons;
+	transform: rotate(-122deg);
+}
+
+.ennemy .anim_rayons {
+	animation-name: rayons;
+	transform: rotate(58deg);
+}
+
+@keyframes rayons {
+	0% {
+	    height: 0px;
+	    top: $top + 275px;
+		left: $left_ennemy - 386px;
+		background-color: blue;
+	}
+
+	30% {
+		top: $top - 69px;
+		left: $left_ennemy - 194px;
+		height: 450px;
+		background-color: blue;
+	}
+
+	31% {
+		height: 0px;
+	    top: $top + 275px;
+		left: $left_ennemy - 386px;
+		background-color: red;
+	}
+
+	60% {
+		top: $top - 69px;
+		left: $left_ennemy - 194px;
+		height: 450px;
+		background-color: red;
+	}
+
+	61% {
+		height: 0px;
+	    top: $top + 275px;
+		left: $left_ennemy - 386px;
+		background-color: blue;
+	}
+
+	100% {
+		top: $top - 69px;
+		left: $left_ennemy - 194px;
+		height: 450px;
+		background-color: blue;
+	}
+}
+
+@keyframes receive_rayons {
+	0% {
+	    height: 0px;
+	    top: $top - 170px;
+		left: $left_ally + 386px;
+		background-color: blue;
+	}
+
+	30% {
+		top: $top - 280px;
+		left: $left_ally + 194px;
+		height: 450px;
+		background-color: blue;
+	}
+
+	31% {
+		height: 0px;
+	    top: $top - 170px;
+		left: $left_ally + 386px;
+		background-color: red;
+	}
+
+	60% {
+		top: $top - 280px;
+		left: $left_ally + 194px;
+		height: 450px;
+		background-color: red;
+	}
+
+	61% {
+		height: 0px;
+	    top: $top - 170px;
+		left: $left_ally + 386px;
+		background-color: blue;
+	}
+
+	100% {
+		top: $top - 280px;
+		left: $left_ally + 194px;
+		height: 450px;
+		background-color: blue;
+	}
+}
+
+/*
+*	CHAKRA
+*/
+
+.anim_chakra {
+	width: 20px;
+	height: 2px;
+	position: absolute;
+	background-color: #f6290c;
+	border-left: solid 4px red;
+	border-right: solid 4px red;
+	animation-duration: 1.3s;
+	animation-timing-function: linear;
+
+	top: $top - 69px;
+		left: $left_ennemy - 194px;
+		height: 450px;
+transform: rotate(58deg);
+
+
+	&:after {
+
+		width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-top: 100px solid red;
+	position: absolute;
+	content: "";
+	top: 30px;
+	left: -50px;
+
+	}
+
+	&:before {
+
+		width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-top: 100px solid red;
+	position: absolute;
+	content: "";
+	top: 30px;
+	left: -50px;
+	}
+}
+
+.ally .anim_chakra {
+	animation-name: receive_chakra;
+	transform: rotate(-122deg);
+
+	&:after {
+		top: 10px;
+	  	left: 16px;
+	}
+}
+
+.ennemy .anim_chakra {
+	animation-name: chakra;
+	transform: rotate(58deg);
+
+	&:after {
+		top: -10px;
+	  	left: -16px;
+	}
+}
+
+@keyframes chakra {
+	0% {
+	    height: 0px;
+	    top: $top + 275px;
+		left: $left_ennemy - 386px;
+
+	}
+
+	100% {
+		top: $top - 69px;
+		left: $left_ennemy - 194px;
+		height: 450px;
+	}
+}
+
+@keyframes receive_chakra {
+	0% {
+	    height: 0px;
+	    top: $top - 275px;
+		left: $left_ally + 386px;
+
+	}
+
+	100% {
+		top: $top + 69px;
+		left: $left_ally + 194px;
+		height: 450px;
+	}
+}
+
+/*
+*	SUPER SAIYAN
+*/
+
+.anim_saiyan {
+	box-shadow: inset 0px 25px 87px 10px #ffc702;
+	position: absolute;
+	animation-name: saiyan;
+	animation-duration: 3s;
+	width: 0;
+	height: 0;
+}
+
+.ally .anim_saiyan {
+	animation-name: receive_saiyan;
+}
+
+.ennemy .anim_saiyan {
+	animation-name: saiyan;
+}
+
+@keyframes saiyan {
+	0% {
+		width: 210px;
+		height: 190px;
+		top: $top + 150px;
+		left: $left_ennemy - 531px;
+	    opacity: 0;
+	    border-top-left-radius: 50px;
+		border-top-right-radius: 50px;
+	}
+
+	5% {
+		opacity: 1;
+	}
+
+	30% {
+		width: 190px;
+ 		height: 190px;
+		border-radius: 100%;
+	}
+
+	35% {
+		top: $top + 170px;
+	}
+
+	40% {
+		top: $top + 150px;
+	}
+
+	45% {
+		top: $top + 170px;
+	}
+
+	50% {
+		top: $top + 150px;
+	}
+
+	55% {
+		top: $top + 170px;
+	}
+
+	60% {
+		top: $top + 150px;
+	}
+
+	65% {
+		top: $top + 170px;
+	}
+
+	70% {
+		top: $top + 150px;
+		left: $left_ennemy - 531px;
+	}
+
+	80% {
+		top: $top - 43px;
+  		left: $left_ennemy + 55px;
+  		width: 190px;
+ 		height: 190px;
+	}
+
+	90% {
+		width: 0px;
+		height: 0px;
+		top: $top + 41px;
+  		left: $left_ennemy + 39px;
+	}
+
+	100% {
+		top: $top - 43px;
+  		left: $left_ennemy - 55px;
+		width: 190px;
+ 		height: 190px;
+		border-radius: 100%;
+	}
+}
+
+@keyframes receive_saiyan {
+	0% {
+		width: 210px;
+		height: 190px;
+		top: $top - 150px;
+		left: $left_ally + 531px;
+	    opacity: 0;
+	    border-top-left-radius: 50px;
+		border-top-right-radius: 50px;
+	}
+
+	5% {
+		opacity: 1;
+	}
+
+	30% {
+		width: 190px;
+ 		height: 190px;
+		border-radius: 100%;
+	}
+
+	35% {
+		top: $top - 170px;
+	}
+
+	40% {
+		top: $top - 150px;
+	}
+
+	45% {
+		top: $top - 170px;
+	}
+
+	50% {
+		top: $top - 150px;
+	}
+
+	55% {
+		top: $top - 170px;
+	}
+
+	60% {
+		top: $top - 150px;
+	}
+
+	65% {
+		top: $top - 170px;
+	}
+
+	70% {
+		top: $top - 150px;
+		left: $left_ally + 531px;
+	}
+
+	80% {
+		top: $top + 43px;
+  		left: $left_ally - 55px;
+  		width: 190px;
+ 		height: 190px;
+	}
+
+	90% {
+		width: 0px;
+		height: 0px;
+		top: $top - 41px;
+  		left: $left_ally - 39px;
+	}
+
+	100% {
+		top: $top + 43px;
+  		left: $left_ally + 55px;
+		width: 190px;
+ 		height: 190px;
+		border-radius: 100%;
+	}
+}
+
+/*
+*	ULTIMATE
+*/
+
+.anim_ultimate {
+	display: inline-block;
+	margin: 0;
+	border-radius: 50%;
+	position: absolute;
+	transform-style: preserve-3d;
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(252,234,187,1)), color-stop(50%,rgba(252,205,77,1)), color-stop(51%,rgba(248,181,0,1)), color-stop(75%,rgba(249,221,149,1)), color-stop(100%,rgba(251,223,147,1)));
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(252,234,187,1) 0%,rgba(252,205,77,1) 50%,rgba(248,181,0,1) 51%,rgba(249,221,149,1) 75%,rgba(251,223,147,1) 100%);
+	animation-name: ultimate;
+	animation-duration: 2.5s;
+	animation-timing-function: ease-in-out;
+
+	&:before {
+	  content: "";
+	  position: absolute;
+	  top: 0%;
+	  left: 0%;
+	  width: 100%;
+	  height: 100%;
+	  border-radius: 50%;
+	  z-index: 2;
+	}
+
+	&:after {
+	  content: "";
+	  position: absolute;
+	  border-radius: 50%;
+	  width: 100%;
+	  height: 100%;
+	  top: 0;
+	  left: 0;
+	  opacity: 0.3;
+	}
+}
+
+.ally .anim_ultimate {
+	animation-name: receive_ultimate;
+}
+
+.ennemy .anim_ultimate {
+	animation-name: ultimate;
+}
+
+@keyframes ultimate {
+	0% {
+	    height: 50px;
+	    width: 50px;
+	    top: $top + 230px;
+	    left: $left_ennemy - 350px;
+	}
+
+	33% {
+		top: $top - 5px;
+	    left: $left_ennemy - 4px;
+		width: 150px;
+	    height: 150px;
+	}
+
+	66% {
+		top: $top - 805px;
+	    left: $left_ennemy - 804px;
+		width: 2000px;
+	    height: 2000px;
+	}
+
+	80% {
+		top: $top - 5px;
+	    left: $left_ennemy - 4px;
+	    width: 150px;
+	    height: 150px;
+
+	}
+
+	100% {
+		background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(243,197,189,1)), color-stop(50%,rgba(232,108,87,1)), color-stop(51%,rgba(234,40,3,1)), color-stop(75%,rgba(255,102,0,1)), color-stop(100%,rgba(199,34,0,1)));
+		background: -webkit-radial-gradient(center, ellipse cover, rgba(243,197,189,1) 0%,rgba(232,108,87,1) 50%,rgba(234,40,3,1) 51%,rgba(255,102,0,1) 75%,rgba(199,34,0,1) 100%);
+	}
+}
+
+@keyframes receive_ultimate {
+	0% {
+	    height: 50px;
+	    width: 50px;
+	    top: $top - 230px;
+	    left: $left_ally + 350px;
+	}
+
+	33% {
+		top: $top + 5px;
+	    left: $left_ally + 4px;
+		width: 150px;
+	    height: 150px;
+	}
+
+	66% {
+		top: $top - 805px;
+	    left: $left_ally - 804px;
+		width: 2000px;
+	    height: 2000px;
+	}
+
+	80% {
+		top: $top + 5px;
+	    left: $left_ally + 4px;
+	    width: 150px;
+	    height: 150px;
+
+	}
+
+	100% {
+		background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(243,197,189,1)), color-stop(50%,rgba(232,108,87,1)), color-stop(51%,rgba(234,40,3,1)), color-stop(75%,rgba(255,102,0,1)), color-stop(100%,rgba(199,34,0,1)));
+		background: -webkit-radial-gradient(center, ellipse cover, rgba(243,197,189,1) 0%,rgba(232,108,87,1) 50%,rgba(234,40,3,1) 51%,rgba(255,102,0,1) 75%,rgba(199,34,0,1) 100%);
+	}
+}
+
+
+
+/*
+*	ANIM MANGA BALL
+*/
+
+.anim_mangaball {
+	display: inline-block;
+	width: 60px;
+	height: 59px;
+	margin: 0;
+	position: absolute;
+	background-image: url('/assets/img/anim/ball.png');
+	background-repeat: no-repeat;
+	animation-duration: 1.3s;
+	animation-timing-function: ease-in-out;
+	animation-name: mangaball;
+
+}
+
+@keyframes mangaball {
+
+	0% {
+	    top: $top + 230px;
+	    left: $left_ennemy - 350px;
+	}
+
+	100% {
+	    top: $top - 5px;
+	    left: $left_ennemy - 4px;
+	}
+}
+
+
+
+@keyframes injured {
+	15% {
+		opacity: 0;
+	}
+	30% {
+		opacity: 1;
+	}
+	45% {
+		opacity: 0;
+	}
+	60% {
+		opacity: 1;
+	}
+	75% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

@@ -12,11 +12,10 @@ export const initialState: CharactersState = {
 
 export const charactersReducer: Reducer<CharactersState> = (
   state = initialState,
-  action: CharacterActions,
+  action: CharacterActions
 ): CharactersState => {
-
   switch (action.type) {
-    case "CHARACTER_SET_CHARACTERS":
+    case 'CHARACTER_SET_CHARACTERS':
       return {
         ...state,
         list: action.payload,
@@ -26,4 +25,3 @@ export const charactersReducer: Reducer<CharactersState> = (
       return state;
   }
 };
-

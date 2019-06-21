@@ -1,11 +1,11 @@
 <app-character-list
-  *ngIf="(characters | async) && !currentCharacter"
+  *ngIf="(characters | async) && !currentCharacterId"
   [characters]="characters | async"
   (chooseCharacter)="onChooseCharacter($event)"
 ></app-character-list>
 
 <app-battle
-  *ngIf="currentCharacter"
-  [ally]="currentCharacter"
-  [ennemy]="ennemy"
+  *ngIf="currentCharacterId"
+  [ally]="allyCharacter"
+  [ennemy]="ennemyCharacter"
 ></app-battle>

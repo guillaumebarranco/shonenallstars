@@ -14,14 +14,15 @@ export interface Character {
   manga_name: string;
   name: string;
   vit: 70;
+  level?: 1;
 }
 
 export class Attack {
-  anim: string;
-  name: string;
-  power: number;
-  requis: number;
-  type: string;
+  public anim: string;
+  public name: string;
+  public power: number;
+  public requis: number;
+  public type: string;
 }
 
 export interface CharacterResponse {

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
+import { Injectable } from '@angular/core';
 
-import { IAppState } from '../store';
 import { BaseDispatcher } from '../shared/dispatchers/base.dispatcher';
-import { Character, CharacterResponse } from '../shared/interfaces/character/character';
-import { ArcadeService } from './arcade.service';
+import { CharacterResponse } from '../shared/interfaces/character/character';
+import { IAppState } from '../store';
 import { CharacterSetCharactersAction } from './arcade.actions';
+import { ArcadeService } from './arcade.service';
 
 @Injectable()
 export class ArcadeDispatcher extends BaseDispatcher {
@@ -16,13 +16,12 @@ export class ArcadeDispatcher extends BaseDispatcher {
     super(ngRedux);
   }
 
-  getCharacters() {
+  public getCharacters() {
     this.service.getCharacters().subscribe((response: CharacterResponse) => {
-
       this.dispatch<CharacterSetCharactersAction>({
-        type: 'CHARACTER_SET_CHARACTERS',
         payload: response.persos,
-      })
+        type: 'CHARACTER_SET_CHARACTERS',
+      });
     });
   }
 }

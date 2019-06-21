@@ -1,24 +1,25 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Inject } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
+import { HttpClientModule } from '@angular/common/http';
+import { Inject, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
 import { StoreEnhancer } from 'redux';
 import { createLogger } from 'redux-logger';
 import { persistReducer, persistStore } from 'redux-persist';
-import { PersistConfig } from 'redux-persist/lib/types';
-import { createFilter } from 'redux-persist-transform-filter';
 import sessionStorage from 'redux-persist/lib/storage/session';
+import { PersistConfig } from 'redux-persist/lib/types';
 
-import { IAppState, rootReducer, initialState } from './store';
 import { environment } from '../environments/environment';
-import { AppComponent } from './app.component';
 import { AdventureComponent } from './adventure/adventure.component';
-import { HomeComponent } from './home/home.component';
-
 import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { ArcadeModule } from './arcade/arcade.module';
+import { HomeComponent } from './home/home.component';
+import { IAppState, initialState, rootReducer } from './store';
 
 @NgModule({
+  bootstrap: [AppComponent],
+  declarations: [AppComponent, AdventureComponent, HomeComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -26,22 +27,15 @@ import { ArcadeModule } from './arcade/arcade.module';
     AppRoutingModule,
     ArcadeModule,
   ],
-  declarations: [
-    AppComponent,
-    AdventureComponent,
-    HomeComponent,
-  ],
   providers: [
-    { provide: 'sessionStorageFromReduxPersist', useValue: sessionStorage}
+    { provide: 'sessionStorageFromReduxPersist', useValue: sessionStorage },
   ],
-  bootstrap: [AppComponent]
 })
 export class AppModule {
-
   constructor(
     private ngRedux: NgRedux<IAppState>,
     private devTools: DevToolsExtension,
-    @Inject('sessionStorageFromReduxPersist') private storage: Storage,
+    @Inject('sessionStorageFromReduxPersist') private storage: Storage
   ) {
     this.configureStore();
   }
@@ -49,7 +43,7 @@ export class AppModule {
   private configureStore() {
     const enhancers: StoreEnhancer<IAppState>[] = [];
 
-    if(this.devTools.isEnabled()) {
+    if (this.devTools.isEnabled()) {
       enhancers.push(this.devTools.enhancer());
     }
 
@@ -68,7 +62,7 @@ export class AppModule {
       persistedReducer,
       initialState,
       middlewares,
-      enhancers,
+      enhancers
     );
 
     persistStore(this.ngRedux);

@@ -1,3 +1,151 @@
-<p>
-  battle works!
-</p>
+<div class="battle">
+  <div class="ennemy">
+    <div class="infos_battle">
+      <div class="status">
+        <div class="name">{{ ennemy.name }}</div>
+
+        <div class="life">
+          <b>Life</b>
+          <span
+            ><strong>{{ ennemyLife }}</strong></span
+          >
+        </div>
+
+        <div class="pp">
+          <b>PP</b>
+          <span
+            ><strong>{{ ennemyPP }}</strong></span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="anim">
+      <div
+        *ngIf="currentAllyAttackAnim"
+        [ngClass]="currentAllyAttackAnim"
+      ></div>
+    </div>
+
+    <!-- <div class="picture">
+      <img [src]="_ennemyPicture" />
+    </div> -->
+  </div>
+
+  <div class="ally">
+    <div class="anim">
+      <div
+        *ngIf="currentEnnemyAttackAnim"
+        [ngClass]="currentEnnemyAttackAnim"
+      ></div>
+    </div>
+
+    <!-- <div class="picture">
+      <img [src]="_allyPicture" />
+    </div> -->
+
+    <div class="infos_battle">
+      <div class="status">
+        <div class="name">{{ ally.name }}</div>
+
+        <div class="life">
+          <b>Life</b>
+          <span
+            ><strong>{{ allyLife }}</strong></span
+          >
+        </div>
+
+        <div class="pp">
+          <b>PP</b>
+          <span
+            ><strong>{{ allyPP }}</strong></span
+          >
+        </div>
+      </div>
+
+      <div style="height: 30px;">
+        <a href="#" class="button_return">Retour</a>
+      </div>
+
+      <ul class="choose">
+        <ng-container *ngIf="_actionIsNone">
+          <li>
+            <button
+              class="button_depart make_attack"
+              (click)="setActionToAttack()"
+            >
+              Attack
+            </button>
+          </li>
+          <li>
+            <button class="button_depart use_tools" (click)="setActionToTool()">
+              Tools
+            </button>
+          </li>
+          <li><button class="button_depart manga_ball">Manga Ball</button></li>
+          <li><button class="button_depart">Boutonquisertàrien</button></li>
+        </ng-container>
+
+        <ng-container *ngIf="_actionIsAttack">
+          <li>
+            <button
+              class="button_attack"
+              (click)="_doAllyAttack(ally.attack_1)"
+            >
+              {{ ally.attack_1.name }}
+            </button>
+          </li>
+          <li>
+            <button
+              class="button_attack"
+              (click)="_doAllyAttack(ally.attack_2)"
+            >
+              {{ ally.attack_2.name }}
+            </button>
+          </li>
+          <li>
+            <button
+              class="button_attack"
+              (click)="_doAllyAttack(ally.attack_3)"
+            >
+              {{ ally.attack_3.name }}
+            </button>
+          </li>
+          <li>
+            <button
+              class="button_attack"
+              (click)="_doAllyAttack(ally.attack_4)"
+            >
+              {{ ally.attack_4.name }}
+            </button>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="_actionIsTool">
+          <li>
+            <button class="button_tools" (click)="useAllyToolLifePotion()">
+              <span>PV + 50</span>Life Potion
+            </button>
+          </li>
+          <li>
+            <button class="button_tools" (click)="useAllyToolPPPotion()">
+              <span>PP + 50</span>PP Potion
+            </button>
+          </li>
+          <li>
+            <button class="button_tools" (click)="useAllyToolDoublePotion()">
+              <span>PV + 25 / PP + 25</span>Recovery Potion
+            </button>
+          </li>
+          <li>
+            <button class="button_tools" (click)="useAllyToolShosinsui()">
+              <span>PV 100% / PP - 50</span>Shosinsui
+            </button>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="chat" [innerHTML]="chatText"></div>
