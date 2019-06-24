@@ -23,6 +23,9 @@ export class ArcadeComponent implements OnInit {
 
   public ngOnInit() {
     this.dispatcher.getCharacters();
+    // setTimeout(() => {
+    //   this.onChooseCharacter(1);
+    // }, 1000);
   }
 
   public onChooseCharacter(character: number): void {
@@ -41,5 +44,9 @@ export class ArcadeComponent implements OnInit {
         .filter((value: Character) => value.id !== this.currentCharacterId)
         .find((value: Character, index: number) => index === randomValue);
     });
+  }
+
+  public _onBattleEnded(winner: string): void {
+    console.log('winner', winner);
   }
 }

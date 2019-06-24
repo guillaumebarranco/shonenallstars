@@ -1,3 +1,5 @@
+import { BattleTool } from '../interfaces/battle/battle-tool';
+import { BattleToolEffect } from '../interfaces/battle/battle-tool-effect';
 import { Character } from '../interfaces/character/character';
 
 export function getAttackForce(
@@ -41,3 +43,22 @@ function getSpecialAttackForce(
     ? power + 5
     : power - 5;
 }
+
+export const toolEffect: { [key: string]: BattleToolEffect } = {
+  [BattleTool.LifePotion]: {
+    life: 50,
+    pp: 0,
+  },
+  [BattleTool.PPPotion]: {
+    life: 0,
+    pp: 50,
+  },
+  [BattleTool.DoublePotion]: {
+    life: 25,
+    pp: 25,
+  },
+  [BattleTool.Shoshinsui]: {
+    life: 100,
+    pp: -50,
+  },
+};

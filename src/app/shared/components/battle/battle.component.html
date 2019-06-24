@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="anim">
+    <div class="anim" #ennemyAnimElement>
       <div
         *ngIf="currentAllyAttackAnim"
         [ngClass]="currentAllyAttackAnim"
@@ -33,7 +33,7 @@
   </div>
 
   <div class="ally">
-    <div class="anim">
+    <div class="anim" #allyAnimElement>
       <div
         *ngIf="currentEnnemyAttackAnim"
         [ngClass]="currentEnnemyAttackAnim"
@@ -67,7 +67,7 @@
         <a href="#" class="button_return">Retour</a>
       </div>
 
-      <ul class="choose">
+      <ul [hidden]="!_canAllyMakeActions" class="choose">
         <ng-container *ngIf="_actionIsNone">
           <li>
             <button

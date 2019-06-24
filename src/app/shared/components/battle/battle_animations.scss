@@ -1286,7 +1286,7 @@ $top : -20px;
 		background-color: blue;
 		position: absolute;
 		top: -10px;
-	  	left: -16px;
+	  left: -16px;
 	}
 }
 
@@ -1310,10 +1310,9 @@ $top : -20px;
 
 @keyframes kamehameha {
 	0% {
-	    height: 0px;
-	    top: $top + 275px;
+	  height: 0px;
+	  top: $top + 275px;
 		left: $left_ennemy - 386px;
-
 	}
 
 	100% {
@@ -1357,7 +1356,7 @@ $top : -20px;
 		background-color: inherit;
 		position: absolute;
 		top: -10px;
-	  	left: -16px;
+	  left: -16px;
 	}
 }
 
@@ -1472,11 +1471,10 @@ $top : -20px;
 	border-right: solid 4px red;
 	animation-duration: 1.3s;
 	animation-timing-function: linear;
-
 	top: $top - 69px;
-		left: $left_ennemy - 194px;
-		height: 450px;
-transform: rotate(58deg);
+	left: $left_ennemy - 194px;
+	height: 450px;
+	transform: rotate(58deg);
 
 
 	&:after {

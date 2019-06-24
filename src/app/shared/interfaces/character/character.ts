@@ -13,7 +13,7 @@ export interface Character {
   img_front: string;
   manga_name: string;
   name: string;
-  vit: 70;
+  vit: number;
   level?: 1;
 }
 

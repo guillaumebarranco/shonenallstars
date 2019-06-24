@@ -8,4 +8,5 @@
   *ngIf="currentCharacterId"
   [ally]="allyCharacter"
   [ennemy]="ennemyCharacter"
+  (battleEnded)="_onBattleEnded($event)"
 ></app-battle>
