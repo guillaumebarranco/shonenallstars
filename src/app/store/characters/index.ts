@@ -1,9 +1,10 @@
+import { Character } from 'app/shared/interfaces/character/character';
 import { Reducer } from 'redux';
 
-import { CharacterActions } from '../../arcade/arcade.actions';
+import { CharacterActions, CharacterSetCharactersAction } from '../../arcade/arcade.actions';
 
 export interface CharactersState {
-  list: any[];
+  list: Character[];
 }
 
 export const initialState: CharactersState = {
@@ -16,9 +17,11 @@ export const charactersReducer: Reducer<CharactersState> = (
 ): CharactersState => {
   switch (action.type) {
     case 'CHARACTER_SET_CHARACTERS':
+      const setCharacterAction = action as CharacterSetCharactersAction;
+
       return {
         ...state,
-        list: action.payload,
+        list: setCharacterAction.payload,
       };
 
     default:

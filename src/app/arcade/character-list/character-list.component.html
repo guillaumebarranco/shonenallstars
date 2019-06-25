@@ -1,5 +1,10 @@
 <ul>
-  <li *ngFor="let c of characters" (click)="choose(c.id)">
-    <img [src]="'/assets/img/persos/'+c.img_front">
-  </li>
+  <ng-container *ngFor="let c of characters">
+    <li *ngIf="c.unlocked" (click)="choose(c.id)">
+      <img [src]="'/assets/img/persos/' + c.img_front" />
+    </li>
+    <li *ngIf="!c.unlocked" class="locked">
+      <img [src]="'/assets/img/persos/' + c.img_front" />
+    </li>
+  </ng-container>
 </ul>

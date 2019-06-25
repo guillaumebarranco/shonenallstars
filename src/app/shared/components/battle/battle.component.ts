@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 import { BattleAction } from 'app/shared/interfaces/battle/battle-action';
 import { BattleTool } from 'app/shared/interfaces/battle/battle-tool';
@@ -12,9 +12,18 @@ import { Attack, Character } from '../../interfaces/character/character';
   styleUrls: ['./battle.component.scss', './battle_animations.scss'],
   templateUrl: './battle.component.html',
 })
-export class BattleComponent implements OnInit {
+export class BattleComponent {
   @Input() public ally: Character;
-  @Input() public ennemy: Character;
+
+  @Input('ennemy')
+  get ennemy() {
+    return this._ennemy;
+  }
+  set ennemy(value: Character) {
+    this._ennemy = value;
+    this._initBattle();
+  }
+  public _ennemy: Character;
 
   @ViewChild('allyAnimElement') public allyAnimElement;
   @ViewChild('ennemyAnimElement') public ennemyAnimElement;
@@ -33,11 +42,17 @@ export class BattleComponent implements OnInit {
   public ennemyLife = 100;
   public ennemyPP = 100;
 
-  public ngOnInit(): void {
+  public _initBattle(): void {
+    this.ennemyLife = 100;
+    this.ennemyPP = 100;
+    this.allyLife = 100;
+    this.allyPP = 100;
+
     if (this.ennemy.vit >= this.ally.vit) {
       this._playEnnemyTurn();
+    } else {
+      this._canAllyMakeActions = true;
     }
-    // this._playEnnemyTurn();
   }
 
   public _doAllyAttack(attack: Attack): void {
@@ -77,31 +92,39 @@ export class BattleComponent implements OnInit {
   }
 
   public _doEnnemyAttack(attack: Attack): void {
-    this.currentEnnemyAttackAnim = `anim_${attack.anim}`;
+    this.chatText = '';
 
-    const attackForceBoost = this._attackBoost;
-    const attackPower =
-      this._getAttackPower(attack, 'ennemy') + attackForceBoost;
+    if (attack.requis <= this.ennemyPP) {
+      this.currentEnnemyAttackAnim = `anim_${attack.anim}`;
 
-    this._displayEnnemyAttackText(attack, attackPower, attackForceBoost);
+      const attackForceBoost = this._attackBoost;
+      const attackPower =
+        this._getAttackPower(attack, 'ennemy') + attackForceBoost;
 
-    setTimeout(() => {
-      const duration = this._ennemyAttackDuration;
+      this._displayEnnemyAttackText(attack, attackPower, attackForceBoost);
 
       setTimeout(() => {
-        this.currentEnnemyAttackAnim = null;
-        this.chatText = '';
+        const duration = this._ennemyAttackDuration;
 
-        this.ennemyPP = this.ennemyPP - attack.requis;
-        this.allyLife = this.allyLife - attackPower;
+        setTimeout(() => {
+          this.currentEnnemyAttackAnim = null;
+          this.chatText = '';
 
-        if (this._battleIsOver) {
-          this._endBattle();
-        } else {
-          this._playAllyTurn();
-        }
-      }, duration);
-    }, 100);
+          this.ennemyPP = this.ennemyPP - attack.requis;
+          this.allyLife = this.allyLife - attackPower;
+
+          if (this._battleIsOver) {
+            this._endBattle();
+          } else {
+            this._playAllyTurn();
+          }
+        }, duration);
+      }, 100);
+    } else {
+      if (this.ennemyPP < 40) {
+        this.ennemyPP = this.ennemyPP + toolEffect[BattleTool.PPPotion].pp;
+      }
+    }
   }
 
   private get _attackBoost(): number {
@@ -173,11 +196,6 @@ export class BattleComponent implements OnInit {
 
   private _endBattle(): void {
     this._canAllyMakeActions = false;
-    this.ennemyLife = 100;
-    this.ennemyPP = 100;
-    this.allyLife = 100;
-    this.allyPP = 100;
-
     this._allyWon ? this._endWithAllyAsWinner() : this._endWithEnnemyAsWinner();
   }
 

@@ -1,5 +1,5 @@
 <div class="battle">
-  <div class="ennemy">
+  <div *ngIf="ennemy" class="ennemy">
     <div class="infos_battle">
       <div class="status">
         <div class="name">{{ ennemy.name }}</div>
@@ -32,7 +32,7 @@
     </div> -->
   </div>
 
-  <div class="ally">
+  <div *ngIf="ally" class="ally">
     <div class="anim" #allyAnimElement>
       <div
         *ngIf="currentEnnemyAttackAnim"

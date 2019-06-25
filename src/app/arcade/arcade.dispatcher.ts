@@ -4,7 +4,9 @@ import { Injectable } from '@angular/core';
 import { BaseDispatcher } from '../shared/dispatchers/base.dispatcher';
 import { CharacterResponse } from '../shared/interfaces/character/character';
 import { IAppState } from '../store';
-import { CharacterSetCharactersAction } from './arcade.actions';
+import {
+    CharacterActionType, CharacterSetCharactersAction, UnlockCharacterAction
+} from './arcade.actions';
 import { ArcadeService } from './arcade.service';
 
 @Injectable()
@@ -16,12 +18,19 @@ export class ArcadeDispatcher extends BaseDispatcher {
     super(ngRedux);
   }
 
-  public getCharacters() {
+  public getCharacters(): void {
     this.service.getCharacters().subscribe((response: CharacterResponse) => {
       this.dispatch<CharacterSetCharactersAction>({
         payload: response.persos,
-        type: 'CHARACTER_SET_CHARACTERS',
+        type: CharacterActionType.CHARACTER_SET_CHARACTERS,
       });
+    });
+  }
+
+  public unlockCharacter(characterId: number): void {
+    this.dispatch<UnlockCharacterAction>({
+      payload: characterId,
+      type: CharacterActionType.UNLOCK_CHARACTER,
     });
   }
 }

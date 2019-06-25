@@ -15,6 +15,7 @@ export interface Character {
   name: string;
   vit: number;
   level?: 1;
+  unlocked?: boolean;
 }
 
 export class Attack {

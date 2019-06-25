@@ -1,12 +1,18 @@
 <app-character-list
-  *ngIf="(characters | async) && !currentCharacterId"
-  [characters]="characters | async"
-  (chooseCharacter)="onChooseCharacter($event)"
+  *ngIf="_characters && !_currentCharacterId"
+  [characters]="_characters"
+  (chooseCharacter)="_onChooseCharacter($event)"
 ></app-character-list>
 
+<p *ngIf="_arcadeWon">Vous avez gagné l'arcade !</p>
+<p *ngIf="_arcadeLost">
+  Vous avez perdu l'arcade au combat n°{{ _currentRound }}. Essayez de faire
+  mieux la prochaine fois.
+</p>
+
 <app-battle
-  *ngIf="currentCharacterId"
-  [ally]="allyCharacter"
-  [ennemy]="ennemyCharacter"
+  *ngIf="_currentCharacterId"
+  [ally]="_allyCharacter"
+  [ennemy]="_ennemyCharacter"
   (battleEnded)="_onBattleEnded($event)"
 ></app-battle>

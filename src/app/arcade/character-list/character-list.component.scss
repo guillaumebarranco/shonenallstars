@@ -13,3 +13,7 @@ img {
   max-width: 100px;
   border: solid 1px black;
 }
+
+.locked {
+  filter: grayscale(1);
+}
