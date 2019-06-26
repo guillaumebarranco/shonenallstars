@@ -13,6 +13,6 @@ export class ArcadeService extends BaseService {
   }
 
   public getCharacters(): Observable<CharacterResponse> {
-    return this.getSingleData<CharacterResponse>(`battle/getPersos`);
+    return this.getSingleData<CharacterResponse>(`/assets/persos.json`);
   }
 }
