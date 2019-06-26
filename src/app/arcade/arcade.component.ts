@@ -18,7 +18,7 @@ export class ArcadeComponent implements OnInit {
   @select(['characters', 'list'])
   public readonly _characters$: Observable<Character[]>;
 
-  private _characters: Character[] = [];
+  public _characters: Character[] = [];
 
   public _currentCharacterId = 0;
   public _allyCharacter: Character = null;
