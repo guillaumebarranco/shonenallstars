@@ -1,179 +1,152 @@
+import { Character } from 'app/shared/interfaces/character/character';
 import { Subject } from 'rxjs';
 
+import { adventureAssets, getCloseObject } from './adventure.utils';
+
 export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
-  public fromInGame: any;
-  public preloadStatus: any;
-  public characters: any[];
-  public load: any; // << ADDED THIS
-  public add: any; // << ADDED THIS
-  public player: any;
-  public people: any;
-  public balls: any;
-  public ball1: any;
-  public ball2: any;
-  public ball3: any;
-  public passText: any;
-  public text: any;
+  public fromInGame$: Subject<any>;
+  public actionsFromContainer$: Subject<any>;
+
+  public load: any;
+  public add: any;
+
+  public characters: Character[];
+
+  public player: Phaser.Physics.Arcade.Sprite;
+
+  public people: Phaser.GameObjects.Group;
+  public balls: Phaser.GameObjects.Group;
+  public ball1: Phaser.GameObjects.GameObject;
+  public ball2: Phaser.GameObjects.GameObject;
+  public ball3: Phaser.GameObjects.GameObject;
+  public passText: Phaser.GameObjects.Text;
+  public text: Phaser.GameObjects.Text;
   public stepTalk = 1;
   public hasPreChosenAlly = false;
-  public allyToBeChosen = null;
-  public ally: any;
+  public allyToBeChosen: number = null;
+  public ally: number;
   public chapter = 0;
   public spoken: any = {};
   public canUpdate = true;
-  public battleResult = null;
-  public actionsFromContainer$: Subject<any>;
+  public battleResult: boolean = null;
 
-  constructor(
-    config,
-    characters,
-    fromInGame,
-    actionsFromContainer$,
-    preloadStatus
-  ) {
+  constructor(config, characters, fromInGame$, actionsFromContainer$) {
     super(config);
     this.characters = characters;
-    this.preloadStatus = preloadStatus;
-    this.fromInGame = fromInGame;
+    this.fromInGame$ = fromInGame$;
     this.actionsFromContainer$ = actionsFromContainer$;
 
     this.actionsFromContainer$.subscribe(a => this.actionsFromContainer(a));
   }
 
-  public preload() {
+  public preload(): void {
     this.load.spritesheet('perso', 'assets/img/assets/perso.png', {
       frameHeight: 48,
       frameWidth: 32,
     });
 
-    [
-      'ball',
-      'korosensei',
-      'piccolo',
-      'rukia',
-      'yugi',
-      'aladdin',
-      'ichigo',
-      'tsubasa',
-      'gon',
-      'kenichi',
-      'kenshin',
-      'toriko',
-      'yusuke',
-      'naruto',
-      'goku',
-      'luffy',
-      'saitama',
-    ].forEach(asset => {
+    adventureAssets.forEach(asset => {
       this.load.image(asset, `assets/img/assets/${asset}.png`);
       this.spoken[asset] = false;
     });
   }
 
-  public create() {
-    this.player = this.physics.add.sprite(400, 500, 'perso');
-    this.player.setCollideWorldBounds(true);
-
-    this.anims.create({
-      frameRate: 10,
-      frames: this.anims.generateFrameNumbers('perso', { start: 0, end: 3 }),
-      key: 'left',
-      repeat: -1,
-    });
-
-    this.anims.create({
-      frameRate: 10,
-      frames: this.anims.generateFrameNumbers('perso', { start: 5, end: 8 }),
-      key: 'right',
-      repeat: -1,
-    });
-
-    this.anims.create({
-      frameRate: 10,
-      frames: this.anims.generateFrameNumbers('perso', { start: 4, end: 4 }),
-      key: 'up',
-      repeat: -1,
-    });
-
-    this.anims.create({
-      frameRate: 10,
-      frames: this.anims.generateFrameNumbers('perso', { start: 4, end: 4 }),
-      key: 'down',
-      repeat: -1,
-    });
-
-    this.balls = this.physics.add.staticGroup();
-
-    this.balls.enableBody = true;
-
-    this.ball1 = this.balls.create(200, 350, 'ball');
-    this.ball2 = this.balls.create(300, 350, 'ball');
-    this.ball3 = this.balls.create(400, 350, 'ball');
-
-    this.physics.add.collider(this.player, this.balls);
-
-    // Création du tableau pour l'ajout des personnages movibles
-    this.people = this.physics.add.staticGroup();
-    this.people.enableBody = true;
-    this.physics.add.collider(this.player, this.people);
-
-    this.text = this.add.text(100, 200, '', {
-      fill: '#fff',
-      fontSize: '16px',
-      wordWrap: { width: 450, useAdvancedWrap: true },
-    });
-
-    this.passText = this.add.text(100, 200, '', {
-      fill: '#fff',
-      fontSize: '16px',
-      wordWrap: { width: 450, useAdvancedWrap: true },
-    });
+  public create(): void {
+    this._createPlayer();
+    this._createBalls();
+    this._createPeople();
+    this._createTextElements();
   }
 
-  public update() {
+  public update(): void {
     const cursors = this.input.keyboard.createCursorKeys();
 
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
 
     if (cursors.left.isDown) {
-      this.player.setVelocityX(-160);
-      this.player.anims.play('left', true);
+      this._movePlayer('left');
     } else if (cursors.right.isDown) {
-      this.player.setVelocityX(160);
-      this.player.anims.play('right', true);
+      this._movePlayer('right');
     } else if (cursors.up.isDown) {
-      this.player.setVelocityY(-160);
-      this.player.anims.play('up', true);
+      this._movePlayer('up');
     } else if (cursors.down.isDown) {
-      this.player.setVelocityY(160);
-      this.player.anims.play('down', true);
+      this._movePlayer('down');
     } else if (cursors.space.isDown) {
-      if (this.canUpdate) {
-        this.canUpdate = false;
-
-        setTimeout(() => {
-          this.canUpdate = true;
-        }, 500);
-        this._talk();
-      }
+      this._handleTalk();
     } else if (cursors.shift.isDown) {
-      if (this.chapter === 0 && !this.ally && this.hasPreChosenAlly) {
-        this.ally = this.allyToBeChosen;
-
-        this.firstChapter();
-
-        this.fromInGame.next({
-          action: 'chooseAlly',
-          key: this.characters.find(c => c.id === this.ally),
-        });
-      }
+      this._makePlayerAction();
     } else {
       this.player.anims.stop();
     }
   }
 
-  private firstChapter() {
+  private _fromInGame(action: string, key: any): void {
+    this.fromInGame$.next({
+      action,
+      key,
+    });
+  }
+
+  private actionsFromContainer(value: { action: string; key: string }) {
+    this.battleResult = null;
+
+    if (value.action === 'battle') {
+      this.battleResult = value.key === 'win' ? true : false;
+    }
+
+    if (this.battleResult) {
+      this.updateChapter();
+    }
+  }
+
+  private _movePlayer(direction: string): void {
+    switch (direction) {
+      case 'left':
+        this.player.setVelocityX(-160);
+        this.player.anims.play('left', true);
+        break;
+      case 'right':
+        this.player.setVelocityX(160);
+        this.player.anims.play('right', true);
+        break;
+      case 'up':
+        this.player.setVelocityY(-160);
+        this.player.anims.play('up', true);
+        break;
+      case 'down':
+        this.player.setVelocityY(160);
+        this.player.anims.play('down', true);
+        break;
+      default:
+        break;
+    }
+  }
+
+  private _handleTalk(): void {
+    if (this.canUpdate) {
+      this.canUpdate = false;
+
+      setTimeout(() => {
+        this.canUpdate = true;
+      }, 500);
+
+      this._talk();
+    }
+  }
+
+  private _makePlayerAction(): void {
+    if (this.chapter === 0 && !this.ally && this.hasPreChosenAlly) {
+      this.ally = this.allyToBeChosen;
+      this.firstChapter();
+      this._fromInGame(
+        'chooseAlly',
+        this.characters.find(c => c.id === this.ally)
+      );
+    }
+  }
+
+  private firstChapter(): void {
     this.chapter = 1;
     this.clearTxt();
     this.balls.clear(true, true);
@@ -183,37 +156,37 @@ export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
     this.addPersoToScene(450, 150, 'piccolo');
   }
 
-  private secondChapter() {
+  private secondChapter(): void {
     this.chapter = 2;
     this.clearTxt();
   }
 
-  private thirdChapter() {
+  private thirdChapter(): void {
     this.chapter = 3;
     this.addPersoToScene(500, 100, 'korosensei');
   }
 
-  private fourthChapter() {
+  private fourthChapter(): void {
     this.chapter = 4;
     this.addPersoToScene(1100, 200, 'yusuke');
     this.addPersoToScene(600, -400, 'saitama');
   }
 
-  private fifthChapter() {
+  private fifthChapter(): void {
     this.chapter = 5;
     this.addPersoToScene(-300, 0, 'kenichi');
   }
 
-  private sixthChapter() {
+  private sixthChapter(): void {
     this.chapter = 6;
     this.addPersoToScene(-400, 0, 'gon');
   }
 
-  private seventhChapter() {
+  private seventhChapter(): void {
     this.chapter = 6;
   }
 
-  private updateChapter() {
+  private updateChapter(): void {
     switch (this.chapter) {
       case 1:
         this.secondChapter();
@@ -238,37 +211,7 @@ export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
     }
   }
 
-  private addPersoToScene(left, top, name) {
-    this.people.create(left, top, name);
-  }
-
-  private showPass() {
-    this.passText.x = this.player.x;
-    this.passText.y = this.player.y - 100;
-    this.passText.setText('Appuyer sur espace pour voir la suite');
-
-    this.stepTalk++;
-  }
-
-  private hidePass() {
-    this.passText.setText('');
-    this.stepTalk = 1;
-  }
-
-  private clearTxt() {
-    this.txt('');
-  }
-
-  private txt(content) {
-    this.text.setText(content);
-  }
-
-  private finishTalking() {
-    this.clearTxt();
-    this.hidePass();
-  }
-
-  private showBattle(persoName) {
+  private showBattle(persoName: string): void {
     let perso;
 
     if (persoName === 'trial') {
@@ -283,25 +226,10 @@ export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
       perso = this.characters.find(c => c.name === persoName);
     }
 
-    this.fromInGame.next({
-      action: 'battle',
-      key: perso,
-    });
+    this._fromInGame('battle', perso);
   }
 
-  private actionsFromContainer(value) {
-    this.battleResult = null;
-
-    if (value.action === 'battle') {
-      this.battleResult = value.key === 'win' ? true : false;
-    }
-
-    if (this.battleResult) {
-      this.updateChapter();
-    }
-  }
-
-  private _talk() {
+  private _talk(): void {
     this.text.x = this.player.x - 100;
     this.text.y = this.player.y - 50;
 
@@ -311,7 +239,7 @@ export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
       this.text.y = this.player.y - 150;
     }
 
-    switch (this._closeObject) {
+    switch (getCloseObject(this.balls, this.player, this.people)) {
       case 'ball1':
         this.txt(
           'Voulez-vous choisir Luffy, le pirate avide de liberté ? Appuyez sur entrée pour confirmer.'
@@ -456,7 +384,7 @@ export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
           this.spoken.rukia = true;
 
           if (this.spoken.korosensei && this.spoken.rukia) {
-            if (this.battleResult !== 'lose') {
+            if (this.battleResult) {
               if (this.stepTalk === 1) {
                 this.txt('Un petit combat ?');
                 this.showPass();
@@ -660,30 +588,98 @@ export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
     }
   }
 
-  private get _closeObject() {
-    let proxi = 100;
-    let choosed = null;
+  private _createPlayer(): void {
+    this.player = this.physics.add.sprite(400, 500, 'perso');
+    this.player.setCollideWorldBounds(true);
+    this._createPlayerAnims();
+  }
 
-    const balls = Object.entries(this.balls.children)[0][1] as any[];
-
-    balls.forEach((ball, index) => {
-      if (Math.abs(ball.x - this.player.x) < proxi) {
-        proxi = Math.abs(ball.x - this.player.x);
-        choosed = `ball${index + 1}`;
-      }
+  private _createPlayerAnims(): void {
+    this.anims.create({
+      frameRate: 10,
+      frames: this.anims.generateFrameNumbers('perso', { start: 0, end: 3 }),
+      key: 'left',
+      repeat: -1,
     });
 
-    const people = Object.entries(this.people.children)[0][1] as any[];
+    this.anims.create({
+      frameRate: 10,
+      frames: this.anims.generateFrameNumbers('perso', { start: 5, end: 8 }),
+      key: 'right',
+      repeat: -1,
+    });
 
-    if (!choosed) {
-      people.forEach(p => {
-        if (Math.abs(p.x - this.player.x) < proxi) {
-          proxi = Math.abs(p.x - this.player.x);
-          choosed = p.texture.key;
-        }
-      });
-    }
+    this.anims.create({
+      frameRate: 10,
+      frames: this.anims.generateFrameNumbers('perso', { start: 4, end: 4 }),
+      key: 'up',
+      repeat: -1,
+    });
 
-    return choosed;
+    this.anims.create({
+      frameRate: 10,
+      frames: this.anims.generateFrameNumbers('perso', { start: 4, end: 4 }),
+      key: 'down',
+      repeat: -1,
+    });
+  }
+
+  private _createBalls(): void {
+    this.balls = this.physics.add.staticGroup();
+
+    this.ball1 = this.balls.create(200, 350, 'ball');
+    this.ball2 = this.balls.create(300, 350, 'ball');
+    this.ball3 = this.balls.create(400, 350, 'ball');
+
+    this.physics.add.collider(this.player, this.balls);
+  }
+
+  private _createPeople(): void {
+    this.people = this.physics.add.staticGroup();
+    this.physics.add.collider(this.player, this.people);
+  }
+
+  private _createTextElements(): void {
+    this.text = this.add.text(100, 200, '', {
+      fill: '#fff',
+      fontSize: '16px',
+      wordWrap: { width: 450, useAdvancedWrap: true },
+    });
+
+    this.passText = this.add.text(100, 200, '', {
+      fill: '#fff',
+      fontSize: '16px',
+      wordWrap: { width: 450, useAdvancedWrap: true },
+    });
+  }
+
+  private addPersoToScene(left: number, top: number, name: string): void {
+    this.people.create(left, top, name);
+  }
+
+  private showPass(): void {
+    this.passText.x = this.player.x;
+    this.passText.y = this.player.y - 100;
+    this.passText.setText('Appuyer sur espace pour voir la suite');
+
+    this.stepTalk++;
+  }
+
+  private hidePass(): void {
+    this.passText.setText('');
+    this.stepTalk = 1;
+  }
+
+  private clearTxt(): void {
+    this.txt('');
+  }
+
+  private txt(content): void {
+    this.text.setText(content);
+  }
+
+  private finishTalking(): void {
+    this.clearTxt();
+    this.hidePass();
   }
 }

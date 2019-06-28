@@ -29,8 +29,6 @@ export class AdventureComponent implements OnInit {
   public _allyCharacter: Character = null;
   public _ennemyCharacter: Character = null;
 
-  public preloadStatus: any = { message: 'preloading' };
-
   constructor(private dispatcher: ArcadeDispatcher) {}
 
   public ngOnInit() {
@@ -58,8 +56,7 @@ export class AdventureComponent implements OnInit {
           config,
           characters,
           actionsInGame$,
-          actionsFromContainer$,
-          this.preloadStatus
+          actionsFromContainer$
         );
 
         this._game = new Game(config);
