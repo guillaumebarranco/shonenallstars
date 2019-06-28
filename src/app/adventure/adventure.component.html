@@ -1,3 +1,10 @@
 <p>
   adventure works!
 </p>
+
+<app-battle
+  *ngIf="_showBattle"
+  [ally]="_allyCharacter"
+  [ennemy]="_ennemyCharacter"
+  (battleEnded)="_onBattleEnded($event)"
+></app-battle>

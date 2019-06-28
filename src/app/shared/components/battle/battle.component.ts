@@ -20,10 +20,18 @@ export class BattleComponent {
     return this._ennemy;
   }
   set ennemy(value: Character) {
-    this._ennemy = value;
-    this._initBattle();
+    console.log('value', value);
+
+    if (value) {
+      this._ennemy = value;
+      this._initBattle();
+    }
   }
   public _ennemy: Character;
+
+  constructor() {
+    console.log('consutrc');
+  }
 
   @ViewChild('allyAnimElement') public allyAnimElement;
   @ViewChild('ennemyAnimElement') public ennemyAnimElement;
@@ -123,6 +131,9 @@ export class BattleComponent {
     } else {
       if (this.ennemyPP < 40) {
         this.ennemyPP = this.ennemyPP + toolEffect[BattleTool.PPPotion].pp;
+        this._playAllyTurn();
+      } else {
+        this._playEnnemyTurn();
       }
     }
   }

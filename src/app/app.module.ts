@@ -10,7 +10,7 @@ import sessionStorage from 'redux-persist/lib/storage/session';
 import { PersistConfig } from 'redux-persist/lib/types';
 
 import { environment } from '../environments/environment';
-import { AdventureComponent } from './adventure/adventure.component';
+import { AdventureModule } from './adventure/adventure.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ArcadeModule } from './arcade/arcade.module';
@@ -19,13 +19,14 @@ import { IAppState, initialState, rootReducer } from './store';
 
 @NgModule({
   bootstrap: [AppComponent],
-  declarations: [AppComponent, AdventureComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
     NgReduxModule,
     AppRoutingModule,
     ArcadeModule,
+    AdventureModule,
   ],
   providers: [
     { provide: 'sessionStorageFromReduxPersist', useValue: sessionStorage },
