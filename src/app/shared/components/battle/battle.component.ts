@@ -292,6 +292,10 @@ export class BattleComponent {
     this._useAllyTool(BattleTool.Shoshinsui);
   }
 
+  public _allyReturnToMenu(): void {
+    this.currentAllyAction = BattleAction.None;
+  }
+
   public get _battleIsOver(): boolean {
     return this._allyWon || this._ennemyWon;
   }
@@ -322,5 +326,25 @@ export class BattleComponent {
 
   public get _actionIsTool(): boolean {
     return this.currentAllyAction === BattleAction.Tool;
+  }
+
+  public get _ennemyLifeWidth(): string {
+    const life = this.ennemyLife * 3;
+    return `${life}px`;
+  }
+
+  public get _allyLifeWidth(): string {
+    const life = this.allyLife * 3;
+    return `${life}px`;
+  }
+
+  public get _ennemyPPWidth(): string {
+    const pp = this.ennemyPP * 3;
+    return `${pp}px`;
+  }
+
+  public get _allyPPWidth(): string {
+    const pp = this.allyPP * 3;
+    return `${pp}px`;
   }
 }

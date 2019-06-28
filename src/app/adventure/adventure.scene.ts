@@ -380,8 +380,8 @@ export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
       case 'piccolo':
         if (this.chapter < 2) {
           // FOR TEST ONLY
-          this.spoken.korosensei = true;
-          this.spoken.rukia = true;
+          // this.spoken.korosensei = true;
+          // this.spoken.rukia = true;
 
           if (this.spoken.korosensei && this.spoken.rukia) {
             if (this.battleResult) {
