@@ -2,10 +2,15 @@ import { NgRedux } from '@angular-redux/store';
 import { Injectable } from '@angular/core';
 
 import { BaseDispatcher } from '../shared/dispatchers/base.dispatcher';
-import { CharacterResponse } from '../shared/interfaces/character/character';
+import {
+  CharacterResponse,
+  Character,
+} from '../shared/interfaces/character/character';
 import { IAppState } from '../store';
 import {
-    CharacterActionType, CharacterSetCharactersAction, UnlockCharacterAction
+  CharacterActionType,
+  CharacterSetCharactersAction,
+  UnlockCharacterAction,
 } from './arcade.actions';
 import { ArcadeService } from './arcade.service';
 
@@ -19,11 +24,20 @@ export class ArcadeDispatcher extends BaseDispatcher {
   }
 
   public getCharacters(): void {
-    this.service.getCharacters().subscribe((response: CharacterResponse) => {
-      this.dispatch<CharacterSetCharactersAction>({
-        payload: response.persos,
-        type: CharacterActionType.CHARACTER_SET_CHARACTERS,
+    if (localStorage.getItem('characters') !== null) {
+      this._dispatchCharacters(JSON.parse(localStorage.getItem('characters')));
+    } else {
+      this.service.getCharacters().subscribe((response: CharacterResponse) => {
+        this._dispatchCharacters(response.persos);
+        localStorage.setItem('characters', JSON.stringify(response.persos));
       });
+    }
+  }
+
+  private _dispatchCharacters(characters: Character[]): void {
+    this.dispatch<CharacterSetCharactersAction>({
+      payload: characters,
+      type: CharacterActionType.CHARACTER_SET_CHARACTERS,
     });
   }
 

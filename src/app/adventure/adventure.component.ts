@@ -9,8 +9,6 @@ import { filter, take } from 'rxjs/operators';
 
 import { AdventureScene } from './adventure.scene';
 
-declare type GamepadHapticActuator = any;
-
 const actionsInGame$ = new Subject();
 const actionsFromContainer$ = new Subject();
 
