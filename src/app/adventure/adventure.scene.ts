@@ -1,4 +1,4 @@
-import { Character } from 'app/shared/interfaces/character/character';
+import { Character } from '../shared/interfaces/character/character';
 import { Subject } from 'rxjs';
 
 import { adventureAssets } from './adventure.utils';
@@ -39,6 +39,7 @@ export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
 
   constructor(config, characters, fromInGame$, actionsFromContainer$) {
     super(config);
+    console.log('characters', characters);
     this.characters = characters;
     this.fromInGame$ = fromInGame$;
     this.actionsFromContainer$ = actionsFromContainer$;
@@ -70,10 +71,11 @@ export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
   }
 
   public update(): void {
-    const cursors = this.input.keyboard.createCursorKeys();
+    const cursors = this['input'].keyboard.createCursorKeys();
 
     this.player.setVelocityX(0);
     this.player.setVelocityY(0);
+
 
     if (cursors.left.isDown) {
       this._movePlayer('left');
@@ -148,6 +150,10 @@ export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
   public showBattle(persoName: string): void {
     let perso;
 
+    console.log('persoName', persoName);
+
+    console.log('this.ally', this.ally);
+
     if (persoName === 'trial') {
       if (this.ally === 1) {
         perso = this.characters.find(c => c.id === 4);
@@ -157,8 +163,10 @@ export class AdventureScene extends (Phaser.Scene as { new (config): any }) {
         perso = this.characters.find(c => c.id === 1);
       }
     } else {
-      perso = this.characters.find(c => c.name === persoName);
+      perso = this.characters.find(c => c.name.toLocaleLowerCase() === persoName.toLocaleLowerCase());
     }
+
+    console.log('perso', perso);
 
     this._fromInGame('battle', perso);
   }

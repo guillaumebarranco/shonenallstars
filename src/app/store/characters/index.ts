@@ -1,7 +1,7 @@
-import { Character } from 'app/shared/interfaces/character/character';
 import { Reducer } from 'redux';
 
 import { CharacterActions, CharacterSetCharactersAction } from '../../arcade/arcade.actions';
+import { Character } from '../../shared/interfaces/character/character';
 
 export interface CharactersState {
   list: Character[];

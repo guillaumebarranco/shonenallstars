@@ -1,10 +1,11 @@
-import { select } from '@angular-redux/store';
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
 
-import { Character } from '../shared/interfaces/character/character';
-import { ArcadeDispatcher } from './arcade.dispatcher';
+import { Character, CharacterResponse } from '../shared/interfaces/character/character';
+import { CharacterListComponent } from './character-list/character-list.component';
+import { BattleComponent } from '../shared/components/battle/battle.component';
+import { CommonModule } from '@angular/common';
+import { ArcadeService } from './arcade.service';
 
 const MAX_ARCADE_ROUNDS = 5;
 const SUPREME_CHARACTER = 'saitama';
@@ -13,10 +14,11 @@ const SUPREME_CHARACTER = 'saitama';
   selector: 'app-arcade',
   styleUrls: ['./arcade.component.scss'],
   templateUrl: './arcade.component.html',
+  standalone: true,
+  imports: [CharacterListComponent, BattleComponent, CommonModule],
+  providers: [ArcadeService]
 })
 export class ArcadeComponent implements OnInit {
-  @select(['characters', 'list'])
-  public readonly _characters$: Observable<Character[]>;
 
   public _characters: Character[] = [];
 
@@ -28,12 +30,13 @@ export class ArcadeComponent implements OnInit {
   public _arcadeWon = false;
   public _arcadeLost = false;
 
-  constructor(private dispatcher: ArcadeDispatcher) {}
+  constructor(private service: ArcadeService) {}
 
   public ngOnInit() {
-    this.dispatcher.getCharacters();
 
-    this._characters$.subscribe((characters: Character[]) => {
+    this.service.getCharacters().subscribe((response: CharacterResponse) => {
+      const characters = response.persos;
+
       this._characters = characters.map(
         this._handleLockedCharacters.bind(this)
       );
@@ -69,7 +72,8 @@ export class ArcadeComponent implements OnInit {
     const characterUnlocked = this._characters.find(
       character => !!character.unlocked
     );
-    this.dispatcher.unlockCharacter(characterUnlocked.id);
+    console.log('characterUnlocked', characterUnlocked);
+    // this.dispatcher.unlockCharacter(characterUnlocked.id);
   }
 
   private _updateArcadesWonStorage(): void {

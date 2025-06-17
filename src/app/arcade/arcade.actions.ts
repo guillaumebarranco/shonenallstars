@@ -1,4 +1,4 @@
-import { Character } from 'app/shared/interfaces/character/character';
+import { Character } from '../shared/interfaces/character/character';
 
 export enum CharacterActionType {
   CHARACTER_SET_CHARACTERS = 'CHARACTER_SET_CHARACTERS',

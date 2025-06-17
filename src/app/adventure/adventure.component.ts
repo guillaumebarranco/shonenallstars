@@ -1,13 +1,13 @@
-import { select } from '@angular-redux/store';
 import { Component, OnInit } from '@angular/core';
 
-import { ArcadeDispatcher } from 'app/arcade/arcade.dispatcher';
-import { Character } from 'app/shared/interfaces/character/character';
 import { AUTO, Game } from 'phaser';
-import { Observable, Subject } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { AdventureScene } from './adventure.scene';
+import { Character, CharacterResponse } from '../shared/interfaces/character/character';
+import { BattleComponent } from '../shared/components/battle/battle.component';
+import { CommonModule } from '@angular/common';
+import { ArcadeService } from '../arcade/arcade.service';
 
 const actionsInGame$ = new Subject();
 const actionsFromContainer$ = new Subject();
@@ -16,10 +16,11 @@ const actionsFromContainer$ = new Subject();
   selector: 'app-adventure',
   styleUrls: ['./adventure.component.scss'],
   templateUrl: './adventure.component.html',
+  standalone: true,
+  imports: [BattleComponent, CommonModule,],
+  providers: [ArcadeService]
 })
 export class AdventureComponent implements OnInit {
-  @select(['characters', 'list'])
-  private readonly _characters$: Observable<Character[]>;
 
   public _component;
   public _game: Game;
@@ -27,22 +28,16 @@ export class AdventureComponent implements OnInit {
   public _allyCharacter: Character = null;
   public _ennemyCharacter: Character = null;
 
-  constructor(private dispatcher: ArcadeDispatcher) {}
+  constructor(private service: ArcadeService) {}
 
   public ngOnInit() {
-    this.dispatcher.getCharacters();
-
-    this._characters$
-      .pipe(
-        filter(characters => characters.length > 0),
-        take(1)
-      )
-      .subscribe((characters: Character[]) => {
+    this.service.getCharacters().subscribe((response: CharacterResponse) => {
+        const characters = response.persos;
         const config: Phaser.Types.Core.GameConfig = {
           height: 500,
           physics: {
             arcade: {
-              gravity: { y: 200 },
+              gravity: { y: 200, x: 0 },
             },
             default: 'arcade',
           },
@@ -73,6 +68,7 @@ export class AdventureComponent implements OnInit {
 
   public _fromInGame(): void {
     actionsInGame$.subscribe((a: any) => {
+      console.log('actionsInGame', a);
       const action = a.action;
       const key = a.key;
 

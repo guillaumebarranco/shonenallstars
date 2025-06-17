@@ -1,16 +1,19 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
-import { BattleAction } from 'app/shared/interfaces/battle/battle-action';
-import { BattleTool } from 'app/shared/interfaces/battle/battle-tool';
-import { getAttackForce, toolEffect } from 'app/shared/utils/battle.utils';
-import { rand } from 'app/shared/utils/misc.utils';
 
 import { Attack, Character } from '../../interfaces/character/character';
+import { BattleAction } from '../../interfaces/battle/battle-action';
+import { BattleTool } from '../../interfaces/battle/battle-tool';
+import { toolEffect, getAttackForce } from '../../utils/battle.utils';
+import { rand } from '../../utils/misc.utils';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-battle',
   styleUrls: ['./battle.component.scss', './battle_animations.scss'],
   templateUrl: './battle.component.html',
+  standalone: true,
+  imports: [CommonModule]
 })
 export class BattleComponent {
   @Input() public ally: Character;

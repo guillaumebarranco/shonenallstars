@@ -3,11 +3,13 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
+import { inject } from '@angular/core';
 
 export abstract class BaseService {
   private apiUrl: string;
+  private http = inject(HttpClient);
 
-  constructor(protected http: HttpClient) {
+  constructor() {
     this.apiUrl = environment.apiUrl;
   }
 

@@ -146,7 +146,7 @@ export class AdventureTalk {
           } else if (this.parent.stepTalk === 3) {
             this.parent.txt(`C'est parti !`);
 
-            setTimeout(function() {
+            setTimeout(() => {
               this.parent.showBattle('yusuke');
               this.parent.spoken.rukia = true;
               this.parent.hidePass();
